@@ -9,22 +9,22 @@
       />
     </div>
     <div class="row mt-5">
-      <div id="cadeado" class="col-5">
+      <div id="cadeado" class="col-3">
         <img
           src="@/assets/cadeado.png"
-          class="img-fluid w-25 mt-5"
+          class="img-fluid w-50 mt-5"
           alt="grana"
         />
       </div>
       <div id="formulario" class="col-6">
-        <form class="p-4">
+        <form class="p-4 w-100">
           <div class="mb-3 text-start">
             <label for="exampleInputEmail1" class="form-label"
               >Endereço de Email</label
             >
             <input
               type="email"
-              class="form-control shadow w-75 inputs"
+              class="form-control shadow inputs"
               id="exampleInputEmail1"
               aria-describedby="emailHelp"
             />
@@ -33,16 +33,17 @@
             <label for="exampleInputPassword1" class="form-label">Senha</label>
             <input
               type="password"
-              class="form-control shadow w-75 inputs"
+              class="form-control shadow inputs"
               id="exampleInputPassword1"
             />
           </div>
-          <div id="buttons" class="text-start w-100 d-flex flex-row">
+          <div id="buttons" class="py-3 w-100 d-flex flex-row justify-content-center">
             <button
               type="submit"
               @click.prevent="router.push('/home')"
               class="btn btn-primary shadow buttons"
             >
+              <i class="fas fa-unlock-alt"></i>
               Fazer Login
             </button>
             <a href="#" class="btn ms-1 border shadow buttons"
@@ -52,6 +53,7 @@
               @click.prevent="modalCadastro = true"
               class="btn btn-warning border shadow ms-1 buttons"
             >
+              <i class="fas fa-user-plus"></i>
               Cadastrar-se
             </button>
           </div>
@@ -65,7 +67,7 @@
       :draggable="true"
     >
       <div class="row text-center">
-        <h5>Cadastre-se para acessar</h5>
+        <h5><i class="fas fa-user-plus"></i> Cadastre-se para acessar</h5>
       </div>
       <div class="row">
         <form class="p-4">
@@ -100,6 +102,7 @@
           </div>
           <div id="buttons" class="text-start w-100">
             <button class="btn btn-warning border shadow mt-2">
+              <i class="fas fa-user-plus"></i>
               Cadastrar-se
             </button>
           </div>
