@@ -48,7 +48,10 @@
             <a href="#" class="btn ms-1 border shadow buttons"
               ><i class="fab fa-google me-1"></i> Login com Google</a
             >
-            <button @click.prevent="modalCadastro = true" class="btn btn-warning border shadow ms-1 buttons">
+            <button
+              @click.prevent="modalCadastro = true"
+              class="btn btn-warning border shadow ms-1 buttons"
+            >
               Cadastrar-se
             </button>
           </div>
@@ -57,12 +60,51 @@
     </div>
     <!--------MODAL CADASTRO--------->
     <m-dialog
-        class="w-100"
-        v-model="modalCadastro"
-        title="Cadastro de Usuário"
-        :draggable="true"
+      v-model="modalCadastro"
+      title="Cadastro de Usuário"
+      :draggable="true"
     >
-    <h3>Cadastre-se para acessar</h3>
+      <div class="row text-center">
+        <h5>Cadastre-se para acessar</h5>
+      </div>
+      <div class="row">
+        <form class="p-4">
+          <div class="mb-3 text-start">
+            <label for="exampleInputEmail1" class="form-label"
+              >Endereço de Email</label
+            >
+            <input
+              type="email"
+              class="form-control shadow"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+            />
+          </div>
+          <div class="mb-3 text-start">
+            <label for="exampleInputPassword1" class="form-label">Senha</label>
+            <input
+              type="password"
+              class="form-control shadow"
+              id="exampleInputPassword1"
+            />
+          </div>
+          <div class="mb-3 text-start">
+            <label for="exampleInputPassword1" class="form-label"
+              >Repita a Senha</label
+            >
+            <input
+              type="password"
+              class="form-control shadow"
+              id="exampleInputPassword1"
+            />
+          </div>
+          <div id="buttons" class="text-start w-100">
+            <button class="btn btn-warning border shadow mt-2">
+              Cadastrar-se
+            </button>
+          </div>
+        </form>
+      </div>
     </m-dialog>
     <footer class="py-3 my-4">
       <ul class="nav justify-content-center border-bottom pb-3 mb-3">
@@ -88,13 +130,12 @@
 </template>
 
 <script>
-
 export default {
   name: "loginUser",
   data() {
     return {
-        modalCadastro: false
-    }
+      modalCadastro: false,
+    };
   },
 };
 </script>
