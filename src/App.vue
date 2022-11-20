@@ -1,8 +1,4 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
   <router-view/>
 </template>
 
@@ -12,7 +8,11 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+}
+
+body {
+  background: rgb(153,173,222);
+  background: linear-gradient(106deg, rgba(153,173,222,1) 36%, rgba(216,229,255,1) 100%); 
 }
 
 nav {
