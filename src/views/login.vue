@@ -40,7 +40,7 @@
           <div id="buttons" class="py-3 w-100 d-flex flex-row justify-content-center">
             <button
               type="submit"
-              @click.prevent="router.push('/home')"
+              @click.prevent="$router.push('dashboard/resumo')"
               class="btn btn-primary shadow buttons"
             >
               <i class="fas fa-unlock-alt"></i>
@@ -143,7 +143,11 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+input {
+  padding: 15px !important;
+  font-size: 1.3em !important;
+}
 @media (max-width: 1380px) {
   #boxlogin {
     display: block !important;
