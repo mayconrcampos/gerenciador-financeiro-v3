@@ -3,26 +3,37 @@
     <nav class="navbar navbar-expand-md bg-white">
       <div class="container-fluid">
         <a class="navbar-brand">
-          <img src="@/assets/logomark.png" width="40" alt="money" class="me-5">
+          <img
+            src="@/assets/logomark.png"
+            width="40"
+            alt="money"
+            class="me-5"
+          />
         </a>
         <button
           class="navbar-toggler"
           type="button"
           data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
+          data-bs-target="#navbar"
+          aria-controls="navbar"
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav selected">
-            <router-link class="nav-link fs-4" to="/dashboard/entradas">Entradas</router-link>
-            <router-link class="nav-link fs-4" to="/dashboard/saidas">Saídas</router-link>
-            <router-link class="nav-link fs-4" to="/dashboard/resumo">Resumo</router-link>
-            <router-link class="nav-link fs-4" to="/">Minha Conta</router-link>
-            <router-link class="nav-link fs-4" to="/">Sair</router-link>
+        <div class="collapse navbar-collapse" id="navbar">
+          <div class="navbar-nav">
+            <router-link class="nav-link fs-4" to="/dashboard/entradas"
+              ><i class="fas fa-sign-in-alt"></i> Entradas</router-link
+            >
+            <router-link class="nav-link fs-4" to="/dashboard/saidas"
+              ><i class="fas fa-sign-out-alt"></i> Saídas</router-link
+            >
+            <router-link class="nav-link fs-4" to="/dashboard/resumo"
+              ><i class="fas fa-list"></i> Resumo</router-link
+            >
+            <router-link class="nav-link fs-4" to="/"><i class="fas fa-user"></i> Minha Conta</router-link>
+            <router-link class="nav-link fs-4" to="/"><i class="fas fa-door-open"></i> Sair</router-link>
           </div>
         </div>
       </div>
@@ -36,10 +47,25 @@
 <script>
 export default {
   name: "dashBoard",
+  data() {
+    return {
+    }
+  },
 };
 </script>
 
 <style scoped>
+.nav-link:hover{
+  color: #42b983 !important;
+  background: rgb(235, 234, 234);
+  border-radius: 8px 8px 8px;
+  transition: all 0.5s;
+}
+.nav-link:focus, .nav-link:active{
+  color: #42b983 !important;
+  background: rgb(235, 234, 234) !important;
+  border-radius: 8px 8px 8px !important;
+}
 @media (max-width: 1380px) {
   #imagemlogo {
     display: none !important;

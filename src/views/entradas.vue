@@ -2,32 +2,33 @@
   <div class="container">
     <h3>Entradas Financeiras</h3>
     <div class="table-responsive">
-      <table class="table">
+      <table class="table table-hover">
         <thead>
           <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Valor (R$)</th>
+            <th scope="col">Data</th>
           </tr>
         </thead>
         <tbody>
           <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
+            <th scope="row">Santos Supermercados</th>
+            <td>59,90</td>
+            <td>05/05/2005</td>
           </tr>
           <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
+            <th scope="row">Padaria</th>
+            <td>77,50</td>
+            <td>10/12/2022</td>
           </tr>
           <tr>
-            <th scope="row">3</th>
-            <td colspan="2">Larry the Bird</td>
-            <td>@twitter</td>
+            <th scope="row">Vestecasa</th>
+            <td>22,90</td>
+            <td>10/05/2005</td>
+          </tr>
+          <tr>
+            <th>Total de Entradas</th>
+            <th>R$ Muita grana</th>
           </tr>
         </tbody>
       </table>

@@ -20,7 +20,7 @@
         <form class="p-4 w-100">
           <div class="mb-3 text-start">
             <label for="exampleInputEmail1" class="form-label"
-              >Endereço de Email</label
+              ><i class="fas fa-at"></i> Endereço de Email</label
             >
             <input
               type="email"
@@ -30,7 +30,7 @@
             />
           </div>
           <div class="mb-3 text-start">
-            <label for="exampleInputPassword1" class="form-label">Senha</label>
+            <label for="exampleInputPassword1" class="form-label"><i class="fas fa-key"></i> Senha</label>
             <input
               type="password"
               class="form-control shadow inputs"
@@ -73,7 +73,7 @@
         <form class="p-4">
           <div class="mb-3 text-start">
             <label for="exampleInputEmail1" class="form-label"
-              >Endereço de Email</label
+              ><i class="fas fa-at"></i> Endereço de Email</label
             >
             <input
               type="email"
@@ -83,7 +83,7 @@
             />
           </div>
           <div class="mb-3 text-start">
-            <label for="exampleInputPassword1" class="form-label">Senha</label>
+            <label for="exampleInputPassword1" class="form-label"><i class="fas fa-key"></i> Senha</label>
             <input
               type="password"
               class="form-control shadow"
@@ -92,7 +92,7 @@
           </div>
           <div class="mb-3 text-start">
             <label for="exampleInputPassword1" class="form-label"
-              >Repita a Senha</label
+              ><i class="fas fa-key"></i> Repita a Senha</label
             >
             <input
               type="password"
