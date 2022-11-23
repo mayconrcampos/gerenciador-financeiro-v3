@@ -1,7 +1,16 @@
 <template>
   <div class="container">
-    <h3>Entradas Financeiras</h3>
-    <div class="table-responsive">
+    <div id="search" class="row">
+      <div id="texto" class="col-4 align-self-center fs-4">
+        Entradas Financeiras
+      </div>
+      <div id="filtrar" class="col-7 align-items-center d-flex ">
+        <i class="fas fa-search fs-4 me-2"></i>
+        <input type="text" class="form-control fs-5" placeholder="Filtrar" />
+      </div>
+    </div>
+    
+    <div class="table-responsive mt-5">
       <table class="table table-hover">
         <thead>
           <tr>
@@ -43,4 +52,16 @@ export default {
 </script>
 
 <style scoped>
+@media (max-width: 650px) {
+  #search {
+    display: block !important;
+    width: 100% !important;
+  }
+  #filtrar {
+    width: 100% !important;
+  }
+  #texto {
+    display: none !important;
+  }
+}
 </style>

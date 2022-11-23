@@ -4,6 +4,7 @@ import dashboard from "@/views/dashboard"
 import entradas from "@/views/entradas"
 import saidas from "@/views/saidas"
 import resumos from "@/views/resumos"
+import addConta from "@/views/addConta"
 
 const routes = [
   {
@@ -22,6 +23,13 @@ const routes = [
       title: "Menu Dashboard"
     },
     children: [
+      {
+        path: "addConta",
+        component: addConta,
+        meta: {
+          title: "Adicionar Transação"
+        }
+      },
       {
         path: "entradas",
         component: entradas,
