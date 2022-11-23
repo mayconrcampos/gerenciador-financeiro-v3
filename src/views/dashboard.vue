@@ -35,7 +35,7 @@
             <router-link class="nav-link fs-5" to="/dashboard/resumo"
               ><i class="fas fa-list"></i> Resumo</router-link
             >
-            <router-link class="nav-link fs-5" to="/"><i class="fas fa-user"></i> Minha Conta</router-link>
+            <router-link class="nav-link fs-5" to="/dashboard/profile"><i class="fas fa-user"></i> Minha Conta</router-link>
             <router-link class="nav-link fs-5" to="/"><i class="fas fa-door-open"></i> Sair</router-link>
           </div>
         </div>

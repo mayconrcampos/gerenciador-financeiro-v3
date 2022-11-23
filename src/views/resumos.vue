@@ -55,4 +55,16 @@ export default {
 </script>
 
 <style scoped>
+@media (max-width: 650px) {
+  #search {
+    display: block !important;
+    width: 100% !important;
+  }
+  #filtrar {
+    width: 100% !important;
+  }
+  #texto {
+    display: none !important;
+  }
+}
 </style>
