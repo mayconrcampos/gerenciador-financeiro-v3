@@ -23,21 +23,28 @@
         </button>
         <div class="collapse navbar-collapse" id="navbar">
           <div class="navbar-nav">
-            <router-link class="nav-link fs-4" to="/dashboard/entradas"
+            <router-link class="nav-link btn fs-5" to="/dashboard/addConta"
+              ><i class="fas fa-plus"></i> Add Transação</router-link
+            >
+            <router-link class="nav-link fs-5" to="/dashboard/entradas"
               ><i class="fas fa-sign-in-alt"></i> Entradas</router-link
             >
-            <router-link class="nav-link fs-4" to="/dashboard/saidas"
+            <router-link class="nav-link fs-5" to="/dashboard/saidas"
               ><i class="fas fa-sign-out-alt"></i> Saídas</router-link
             >
-            <router-link class="nav-link fs-4" to="/dashboard/resumo"
+            <router-link class="nav-link fs-5" to="/dashboard/resumo"
               ><i class="fas fa-list"></i> Resumo</router-link
             >
-            <router-link class="nav-link fs-4" to="/"><i class="fas fa-user"></i> Minha Conta</router-link>
-            <router-link class="nav-link fs-4" to="/"><i class="fas fa-door-open"></i> Sair</router-link>
+            <router-link class="nav-link fs-5" to="/"><i class="fas fa-user"></i> Minha Conta</router-link>
+            <router-link class="nav-link fs-5" to="/"><i class="fas fa-door-open"></i> Sair</router-link>
           </div>
         </div>
       </div>
     </nav>
+    <hr>
+    <div class="text-start ms-3">
+      <small>Usuário: maycon.campos@gmail.com</small>
+    </div>
     <div class="row mt-5">
       <router-view></router-view>
     </div>
