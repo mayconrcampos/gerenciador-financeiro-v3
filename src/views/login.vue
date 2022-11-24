@@ -41,17 +41,18 @@
             <button
               type="submit"
               @click.prevent="$router.push('dashboard/resumo')"
-              class="btn btn-primary shadow buttons"
+              class="btn btn-md shadow buttons"
+              id="buttonlogin"
             >
               <i class="fas fa-unlock-alt"></i>
               Fazer Login
             </button>
-            <a href="#" class="btn ms-1 border shadow buttons"
+            <a href="#" class="btn btn-md ms-1 border shadow buttons"
               ><i class="fab fa-google me-1"></i> Login com Google</a
             >
             <button
               @click.prevent="modalCadastro = true"
-              class="btn btn-warning border shadow ms-1 buttons"
+              class="btn btn-md btn-warning border shadow ms-1 buttons"
             >
               <i class="fas fa-user-plus"></i>
               Cadastrar-se
@@ -101,7 +102,7 @@
             />
           </div>
           <div id="buttons" class="text-start w-100">
-            <button class="btn btn-warning border shadow mt-2">
+            <button class="btn btn-lg btn-warning border shadow mt-2">
               <i class="fas fa-user-plus"></i>
               Cadastrar-se
             </button>
@@ -144,6 +145,11 @@ export default {
 </script>
 
 <style scoped>
+#buttonlogin {
+  background: #99adde !important;
+  color: white !important;
+}
+
 input {
   padding: 15px !important;
   font-size: 1.3em !important;

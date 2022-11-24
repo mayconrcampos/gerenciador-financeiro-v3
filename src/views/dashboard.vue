@@ -63,14 +63,14 @@ export default {
 
 <style scoped>
 .nav-link:hover{
-  color: #42b983 !important;
-  background: rgb(235, 234, 234);
+  color: white !important;
+  background: #99adde;
   border-radius: 8px 8px 8px;
   transition: all 0.5s;
 }
 .nav-link:focus, .nav-link:active{
-  color: #42b983 !important;
-  background: rgb(235, 234, 234) !important;
+  color: white !important;
+  background: #99adde;
   border-radius: 8px 8px 8px !important;
 }
 @media (max-width: 1380px) {
