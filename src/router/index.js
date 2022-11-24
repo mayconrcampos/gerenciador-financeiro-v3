@@ -5,6 +5,7 @@ import entradas from "@/views/entradas"
 import saidas from "@/views/saidas"
 import resumos from "@/views/resumos"
 import addConta from "@/views/addConta"
+import profile from "@/views/profile"
 
 const routes = [
   {
@@ -49,6 +50,13 @@ const routes = [
         component: resumos,
         meta: {
           title: "Resumo Financeiro"
+        }
+      },
+      {
+        path: "profile",
+        component: profile,
+        meta: {
+          title: "Minha Conta"
         }
       }
     ]

@@ -1,29 +1,15 @@
 <template>
   <div class="container-md px-5">
+    <div class="fs-5 ms-2 mb-2 text-start">
+      Cadastre seus ganhos e gastos
+    </div>
     <form id="contactForm">
-      <div id="radios" class="mb-3">
-        <div class="form-check form-check-inline alert alert-primary w-25">
-          <label class="form-check-label me-5" for="entrada">
-            <input
-              class="form-check-input"
-              id="entrada"
-              type="radio"
-              name="natureza"
-            />
-            Entrada
-          </label>
-        </div>
-        <div class="form-check form-check-inline alert alert-danger w-25">
-          <label class="form-check-label" for="saida">
-            <input
-              class="form-check-input"
-              id="saida"
-              type="radio"
-              name="natureza"
-            />
-            Saída
-          </label>
-        </div>
+      <div class="form-floating mb-3">
+        <select class="form-select" id="categorias" aria-label="Categorias">
+          <option value="1">Entrada / Receita</option>
+          <option value="2">Saída / Despesa</option>
+        </select>
+        <label for="categorias">Tipo de Gasto</label>
       </div>
       <div class="form-floating mb-3">
         <input
@@ -69,7 +55,7 @@
       </div>
       <div class="d-grid">
         <button
-          class="btn btn-primary btn-lg disabled"
+          class="btn btn-lg"
           id="submitButton"
           type="submit"
         >
@@ -91,5 +77,11 @@ export default {
     #radios {
         display: block !important;
     }
+}
+#submitButton {
+  background: #99adde !important;
+  color: white !important;
+  font-size: 1.5em;
+  font-weight: bolder;
 }
 </style>

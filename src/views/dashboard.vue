@@ -35,7 +35,7 @@
             <router-link class="nav-link fs-5" to="/dashboard/resumo"
               ><i class="fas fa-list"></i> Resumo</router-link
             >
-            <router-link class="nav-link fs-5" to="/"><i class="fas fa-user"></i> Minha Conta</router-link>
+            <router-link class="nav-link fs-5" to="/dashboard/profile"><i class="fas fa-user"></i> Minha Conta</router-link>
             <router-link class="nav-link fs-5" to="/"><i class="fas fa-door-open"></i> Sair</router-link>
           </div>
         </div>
@@ -63,14 +63,14 @@ export default {
 
 <style scoped>
 .nav-link:hover{
-  color: #42b983 !important;
-  background: rgb(235, 234, 234);
+  color: white !important;
+  background: #99adde;
   border-radius: 8px 8px 8px;
   transition: all 0.5s;
 }
 .nav-link:focus, .nav-link:active{
-  color: #42b983 !important;
-  background: rgb(235, 234, 234) !important;
+  color: white !important;
+  background: #99adde;
   border-radius: 8px 8px 8px !important;
 }
 @media (max-width: 1380px) {
