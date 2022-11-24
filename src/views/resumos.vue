@@ -9,9 +9,9 @@
         <input type="text" class="form-control fs-5" placeholder="Filtrar" />
       </div>
     </div>
-    <div class="table-responsive mt-5">
-      <table class="table table-hover">
-        <thead>
+    <div class="table-responsive mt-3">
+      <table class="table table-hover shadow">
+        <thead id="tablehead">
           <tr>
             <th scope="col">Descrição</th>
             <th scope="col">Valor (R$)</th>
@@ -66,5 +66,10 @@ export default {
   #texto {
     display: none !important;
   }
+}
+#tablehead {
+  background-color: #99adde !important;
+  color: white !important;
+  border-radius: 5px 5px 5px !important;
 }
 </style>
