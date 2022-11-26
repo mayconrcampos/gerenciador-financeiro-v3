@@ -1,7 +1,7 @@
 <template>
   <div class="container">
-    <div class="row d-flex justify-content-center">
-      <div class="col-md-7">
+    <div class="row">
+      <div class="col-md-4">
         <div class="card p-3 py-4">
           <div class="text-center">
             <img
@@ -12,32 +12,145 @@
           </div>
 
           <div class="text-center mt-3">
-            <span class="bg-secondary p-1 px-4 rounded text-white">Pro</span>
             <h5 class="mt-2 mb-0">Maycon R. Campos</h5>
             <span>Dev FullStack</span>
+          </div>
+        </div>
+      </div>
+      <div class="card col-md-8 align-items-center">
+        <div class="row m-1 mt-3">
+          <button
+            class="btnAddCategoria btn fs-4 mb-4 shadow m-auto"
+            @click="modalAddCategorias = true"
+          >
+            Inserir Categorias de Lançamento
+          </button>
 
-            <div class="px-4 mt-1">
-              <p class="fonts">
-                Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                labore et dolore magna aliqua. Sabia que o sabiá sabia assobiar?
-                Ut enim ad minim veniam, quis
-                nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                commodo consequat.
-              </p>
+          <!--------MODAL ADD CATEGORIAS DE LANÇAMENTOS--------->
+          <m-dialog
+            v-model="modalAddCategorias"
+            title="Cadastro de Categorias de Lançamento"
+            :draggable="true"
+          >
+            <div class="row p-2">
+              <label class="col-form-label" for="addcategoria">
+                Digite nova Categoria
+              </label>
+              <input
+                type="text"
+                id="addcategoria"
+                class="form-control form-control-sm"
+              />
+              <button
+                class="btnAddCategoria btn btn-sm mt-2"
+                @click="modalAddCategorias = false"
+              >
+                Salvar
+              </button>
+            </div>
+          </m-dialog>
+        </div>
+
+        <div class="d-flex flex-row">
+          <div class="col-lg-6">
+            <div
+              class="btnAddCategoria border rounded p-4 shadow"
+              style="width: 18rem"
+              @click="modalListReceiras = true"
+            >
+              <h1><i class="fas fa-coins"></i></h1>
+              <div class="card-body">
+                <p class="card-text fs-5">
+                  Lista de Entradas / Receitas Financeiras
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <div
+              class="btnAddCategoria border rounded p-4 shadow"
+              style="width: 18rem"
+              @click="modalListDespesas = true"
+            >
+              <h1><i class="fas fa-hand-holding-usd"></i></h1>
+              <div class="card-body">
+                <p class="card-text fs-5">
+                  Lista de Saídas / Despesas financeiras
+                </p>
+              </div>
             </div>
 
-            <ul class="social-list">
-              <li><i class="fa fa-facebook"></i></li>
-              <li><i class="fa fa-dribbble"></i></li>
-              <li><i class="fa fa-instagram"></i></li>
-              <li><i class="fa fa-linkedin"></i></li>
-              <li><i class="fa fa-google"></i></li>
-            </ul>
 
-            <div class="buttons">
-              <button class="btn btn-outline-primary px-4">Message</button>
-              <button class="btn btn-primary px-4 ms-3">Contact</button>
-            </div>
+            <!--------MODAL LISTAR CATEGORIAS - RECEITAS FINANCEIRAS--------->
+            <m-dialog
+              v-model="modalListReceiras"
+              title="Lista de Categorias de Receitas Financeiras"
+              :draggable="true"
+              width="650px"
+            >
+              <div class="row p-2">
+                <div class="table-responsive mt-3">
+                  <table class="table table-hover shadow">
+                    <thead class="tablehead">
+                      <tr>
+                        <th scope="col">Descrição</th>
+                        <th class="text-center" scope="col">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Salário</th>
+                        <td class="text-center">
+                          <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Prestação de Serviço</th>
+                        <td class="text-center">
+                          <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </m-dialog>
+
+
+            <!--------MODAL LISTAR CATEGORIAS DESPESAS FINANCEIRAS--------->
+            <m-dialog
+              v-model="modalListDespesas"
+              title="Cadastro de Categorias de Despesas Financeiras"
+              :draggable="true"
+              width="650px"
+            >
+              <div class="row p-2">
+                <div class="table-responsive mt-3">
+                  <table class="table table-hover shadow">
+                    <thead class="tablehead">
+                      <tr>
+                        <th scope="col">Descrição</th>
+                        <th class="text-center" scope="col">Ações</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <th scope="row">Salário</th>
+                        <td class="text-center">
+                          <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <th scope="row">Prestação de Serviço</th>
+                        <td class="text-center">
+                          <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </m-dialog>
           </div>
         </div>
       </div>
@@ -48,11 +161,26 @@
 <script>
 export default {
   name: "proFile",
+  data() {
+    return {
+      modalAddCategorias: false,
+      modalListReceiras: false,
+      modalListDespesas: false,
+    };
+  },
 };
 </script>
 
 <style scoped>
-
+.tablehead {
+  background-color: #99adde !important;
+  color: white !important;
+  border-radius: 5px 5px 5px !important;
+}
+.btnAddCategoria {
+  background: #99adde !important;
+  color: white;
+}
 .card {
   border: none;
 
