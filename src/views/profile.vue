@@ -4,7 +4,7 @@
       <div class="card col-lg-12 align-items-center">
         <div class="row m-1 mt-3">
           <button
-            class="btnAddCategoria btn fs-4 mb-4 shadow m-auto twoCards"
+            class="btnAddCategoria btn fs-2 mb-4 shadow m-auto twoCards"
             @click="modalAddCategorias = true"
           >
             Inserir Categorias de Lançamentos
@@ -23,11 +23,11 @@
               <input
                 type="text"
                 id="addcategoria"
-                class="form-control form-control-sm mb-2"
+                class="form-control form-control fs-5 mb-2"
               />
               <label for="selectipo">Tipo de Lançamento</label>
               <select
-                class="form-select"
+                class="form-select fs-5"
                 id="selectipo"
                 aria-label="Categorias"
               >
@@ -35,7 +35,7 @@
                 <option value="2">Saída / Despesa</option>
               </select>
               <button
-                class="btnAddCategoria btn btn-md mt-3"
+                class="btnAddCategoria btn mt-3 fs-3"
                 @click="modalAddCategorias = false"
               >
                 Salvar

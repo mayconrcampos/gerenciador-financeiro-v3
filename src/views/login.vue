@@ -60,12 +60,13 @@
               <i class="fas fa-unlock-alt"></i>
               Fazer Login
             </button>
-            <a href="#" class="btn btn-md ms-1 border shadow buttons"
+            <a id="btnlogingoogle" class="btn btn-md ms-1 border shadow buttons"
               ><i class="fab fa-google me-1"></i> Login com Google</a
             >
             <button
               @click.prevent="modalCadastro = true"
               class="btn btn-md btn-warning border shadow ms-1 buttons"
+              id="btncadastrarse"
             >
               <i class="fas fa-user-plus"></i>
               Cadastrar-se
@@ -228,6 +229,15 @@ export default {
 </script>
 
 <style scoped>
+#btncadastrarse:hover {
+  background: #eecf6c !important;
+}
+#btnlogingoogle:hover {
+  background: rgb(245, 192, 192) !important;
+}
+#buttonlogin:hover {
+  background: #68769b !important;
+}
 #buttonlogin {
   background: #99adde !important;
   color: white !important;
