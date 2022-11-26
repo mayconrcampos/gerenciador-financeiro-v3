@@ -23,7 +23,7 @@
         </button>
         <div class="collapse navbar-collapse" id="navbar">
           <div class="navbar-nav">
-            <router-link class="nav-link btn fs-5" to="/dashboard/addConta"
+            <router-link class="nav-link fs-5" to="/dashboard/addConta"
               ><i class="fas fa-plus"></i> Add Transação</router-link
             >
             <router-link class="nav-link fs-5" to="/dashboard/entradas"
