@@ -85,7 +85,7 @@
         <h5><i class="fas fa-user-plus"></i> Cadastre-se para acessar</h5>
       </div>
       <div class="row">
-        <Form class="p-4">
+        <Form @submit="cadastraUsuario" class="p-4">
           <div class="mb-3 text-start">
             <label for="inputCadastraUsuario" class="form-label"
               ><i class="fas fa-at"></i> Endereço de Email</label
@@ -131,7 +131,6 @@
           </div>
           <div id="buttons" class="text-start w-100">
             <button
-              @click.prevent="cadastraUsuario()"
               class="btn btn-lg btn-warning border shadow mt-2"
             >
               <i class="fas fa-user-plus"></i>
@@ -191,6 +190,11 @@ export default {
   methods: {
     cadastraUsuario() {
       console.log(this.cadastra);
+      this.$toast.success(
+        `Usuário ${this.cadastra.usuario} cadastrado com sucesso!`,
+        { position: "top" }
+      );
+      this.modalCadastro = false;
     },
     validaUsuario(email) {
       let usuario = email.substring(0, email.indexOf("@"));
@@ -223,7 +227,6 @@ export default {
       }
       return "Senhas não conferem";
     },
-
   },
 };
 </script>
