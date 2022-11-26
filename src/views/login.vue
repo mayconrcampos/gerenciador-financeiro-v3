@@ -17,7 +17,7 @@
         />
       </div>
       <div id="formulario" class="col-6">
-        <Form class="p-4 w-100">
+        <Form @submit="loginUsuario" class="p-4 w-100">
           <div class="mb-3 text-start">
             <label for="exampleInputEmail1" class="form-label"
               ><i class="fas fa-at"></i> Endereço de Email</label
@@ -53,7 +53,6 @@
           >
             <button
               type="submit"
-              @click.prevent="$router.push('dashboard/resumo')"
               class="btn btn-md shadow buttons"
               id="buttonlogin"
             >
@@ -130,9 +129,7 @@
             <ErrorMessage name="senha2" class="text-danger" />
           </div>
           <div id="buttons" class="text-start w-100">
-            <button
-              class="btn btn-lg btn-warning border shadow mt-2"
-            >
+            <button class="btn btn-lg btn-warning border shadow mt-2">
               <i class="fas fa-user-plus"></i>
               Cadastrar-se
             </button>
@@ -188,11 +185,23 @@ export default {
     };
   },
   methods: {
+    loginUsuario() {
+      this.$router.push("dashboard/resumo");
+      this.$toast.success(`Usuário ${this.login.usuario} logado com sucesso!`, {
+        position: "top-right",
+        duration: 5000,
+        dismissible: true,
+      });
+    },
     cadastraUsuario() {
       console.log(this.cadastra);
       this.$toast.success(
         `Usuário ${this.cadastra.usuario} cadastrado com sucesso!`,
-        { position: "top" }
+        { 
+          position: "top-right",
+          duration: 5000,
+          dismissible: true,
+        }
       );
       this.modalCadastro = false;
     },
