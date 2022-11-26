@@ -1,7 +1,7 @@
 <template>
   <div class="container-md px-5">
     <div class="fs-5 ms-2 mb-2 text-start">
-      Cadastre seus ganhos e gastos
+      Lance aqui seus ganhos e gastos
     </div>
     <form id="contactForm">
       <div class="form-floating mb-3">
@@ -9,7 +9,7 @@
           <option value="1">Entrada / Receita</option>
           <option value="2">Saída / Despesa</option>
         </select>
-        <label for="categorias">Tipo de Gasto</label>
+        <label for="categorias">Despesa ou Receita</label>
       </div>
       <div class="form-floating mb-3">
         <input
@@ -41,7 +41,7 @@
           <option value="Gasolina">Gasolina</option>
           <option value="Taxas">Taxas</option>
         </select>
-        <label for="categorias">Categorias</label>
+        <label for="categorias">Categorias de lançamento</label>
       </div>
       <div class="form-floating mb-3">
         <textarea
