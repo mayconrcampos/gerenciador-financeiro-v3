@@ -1,5 +1,5 @@
 <template>
-  <router-view/>
+  <router-view />
 </template>
 
 <style>
@@ -11,8 +11,12 @@
 }
 
 body {
-  background: rgb(153,173,222);
-  background: linear-gradient(106deg, rgba(153,173,222,1) 36%, rgba(216,229,255,1) 100%); 
+  background: rgb(255, 255, 255);
+  background: linear-gradient(
+    106deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(66, 185, 131, 1) 100%
+  );
 }
 
 nav {
@@ -25,6 +29,8 @@ nav a {
 }
 
 nav a.router-link-exact-active {
-  color: #42b983;
+  color: white !important;
+  background: #42b983;
+  border-radius: 8px 8px 8px !important;
 }
 </style>

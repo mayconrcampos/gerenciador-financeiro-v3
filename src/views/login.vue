@@ -9,14 +9,7 @@
       />
     </div>
     <div class="row mt-5">
-      <div id="cadeado" class="col-3">
-        <img
-          src="@/assets/cadeado.png"
-          class="img-fluid w-50 mt-5"
-          alt="grana"
-        />
-      </div>
-      <div id="formulario" class="col-6">
+      <div id="formulario" class="col-6 m-auto">
         <Form @submit="loginUsuario" class="p-4 w-100">
           <div class="mb-3 text-start">
             <label for="exampleInputEmail1" class="form-label"
@@ -137,31 +130,13 @@
         </Form>
       </div>
     </m-dialog>
-    <footer class="py-3 my-4">
-      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-muted">Home</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-muted">Features</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-muted">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-muted">FAQs</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-muted">About</a>
-        </li>
-      </ul>
-      <p class="text-center text-muted">© 2022 Gerenciador Financeiro</p>
-    </footer>
+    <footerPage />
   </div>
 </template>
 
 <script>
 import { Field, Form, ErrorMessage } from "vee-validate";
+import footerPage from "@/components/footerPage.vue"
 
 export default {
   name: "loginUser",
@@ -169,6 +144,7 @@ export default {
     Field,
     Form,
     ErrorMessage,
+    footerPage,
   },
   data() {
     return {
@@ -244,35 +220,41 @@ export default {
 #btncadastrarse:hover {
   background: #eecf6c !important;
 }
+
 #btnlogingoogle:hover {
   background: rgb(245, 192, 192) !important;
 }
+
 #buttonlogin:hover {
-  background: #68769b !important;
+  background: #83f5c2 !important;
+  color: black !important;
 }
+
 #buttonlogin {
-  background: #99adde !important;
+  background: #42b983 !important;
   color: white !important;
+  font-size: 1.3em;
 }
 
 input {
   padding: 15px !important;
   font-size: 1.3em !important;
 }
+
 @media (max-width: 1380px) {
   #boxlogin {
     display: block !important;
   }
-  #cadeado {
-    display: none;
-  }
+
   #formulario {
     width: 70% !important;
     margin: auto;
   }
+
   #buttons {
     display: block !important;
   }
+
   .buttons {
     width: 100%;
     margin: auto !important;
@@ -282,22 +264,22 @@ input {
     width: 100% !important;
   }
   #imagemlogo {
-    width: 100% !important;
+    width: 70% !important;
   }
 }
 @media (max-width: 650px) {
   form {
     width: 100% !important;
   }
+
   #boxlogin {
     display: block !important;
   }
-  #cadeado {
-    display: none;
-  }
+
   #formulario {
     width: 100% !important;
   }
+
   #buttons {
     display: block !important;
   }
@@ -309,6 +291,7 @@ input {
   .inputs {
     width: 100% !important;
   }
+
   #imagemlogo {
     width: 100% !important;
   }

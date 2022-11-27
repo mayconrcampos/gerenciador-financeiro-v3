@@ -172,8 +172,7 @@ export default {
 
 <style scoped>
 .twoCards:hover {
-  background: #d5e2fd !important;
-  color: black;
+  background: #2c7755 !important;
 }
 
 @media (max-width: 1350px) {
@@ -182,12 +181,12 @@ export default {
   }
 }
 .tablehead {
-  background-color: #99adde !important;
+  background-color: #42b983 !important;
   color: white !important;
   border-radius: 5px 5px 5px !important;
 }
 .btnAddCategoria {
-  background: #99adde !important;
+  background: #42b983 !important;
   color: white;
 }
 .card {
@@ -206,7 +205,7 @@ export default {
   top: 0;
   width: 4px;
   height: 100%;
-  background-color: #99adde;
+  background-color: #42b983;
   transform: scaleY(1);
   transition: all 0.5s;
   transform-origin: bottom;
@@ -219,7 +218,7 @@ export default {
   top: 0;
   width: 4px;
   height: 100%;
-  background-color: #d5e2fd;
+  background-color: #017a44;
   transform: scaleY(0);
   transition: all 0.5s;
   transform-origin: bottom;
@@ -229,40 +228,4 @@ export default {
   transform: scaleY(1);
 }
 
-.fonts {
-  font-size: 11px;
-}
-
-.social-list {
-  display: flex;
-  list-style: none;
-  justify-content: center;
-  padding: 0;
-}
-
-.social-list li {
-  padding: 10px;
-  color: #99adde;
-  font-size: 19px;
-}
-
-.buttons button:nth-child(1) {
-  border: 1px solid #99adde !important;
-  color: #99adde;
-  height: 40px;
-}
-
-.buttons button:nth-child(1):hover {
-  border: 1px solid #99adde !important;
-  color: #fff;
-  height: 40px;
-  background-color: #99adde;
-}
-
-.buttons button:nth-child(2) {
-  border: 1px solid #99adde !important;
-  background-color: #99adde;
-  color: #fff;
-  height: 40px;
-}
 </style>>
