@@ -9,17 +9,10 @@
       />
     </div>
     <div class="row mt-5">
-      <div id="cadeado" class="col-3">
-        <img
-          src="@/assets/cadeado.png"
-          class="img-fluid w-50 mt-5"
-          alt="grana"
-        />
-      </div>
-      <div id="formulario" class="col-6">
-        <Form class="p-4 w-100">
+      <div id="formulario" class="col-6 m-auto">
+        <Form @submit="loginUsuario" class="p-4 w-100">
           <div class="mb-3 text-start">
-            <label for="exampleInputEmail1" class="form-label"
+            <label for="inputLoginUsuario" class="form-label"
               ><i class="fas fa-at"></i> Endereço de Email</label
             >
             <Field
@@ -28,7 +21,7 @@
               :rules="validaUsuario"
               type="email"
               class="form-control shadow inputs"
-              id="exampleInputEmail1"
+              id="inputLoginUsuario"
               aria-describedby="emailHelp"
             />
             <ErrorMessage name="loginUsuario" class="text-danger" />
@@ -53,19 +46,21 @@
           >
             <button
               type="submit"
-              @click.prevent="$router.push('dashboard/resumo')"
-              class="btn btn-md shadow buttons"
+              class="btn btn-lg w-100 shadow buttons fs-5"
               id="buttonlogin"
             >
               <i class="fas fa-unlock-alt"></i>
               Fazer Login
             </button>
-            <a href="#" class="btn btn-md ms-1 border shadow buttons"
+          </div>
+          ou
+          <div class="row m-auto">
+            <a id="btnlogingoogle" class="btn btn-lg border shadow buttons mb-2 fs-5"
               ><i class="fab fa-google me-1"></i> Login com Google</a
             >
             <button
               @click.prevent="modalCadastro = true"
-              class="btn btn-md btn-warning border shadow ms-1 buttons"
+              class="btn btn-lg border shadow buttons fs-5 btncadastrarse"
             >
               <i class="fas fa-user-plus"></i>
               Cadastrar-se
@@ -84,7 +79,7 @@
         <h5><i class="fas fa-user-plus"></i> Cadastre-se para acessar</h5>
       </div>
       <div class="row">
-        <Form class="p-4">
+        <Form @submit="cadastraUsuario" class="p-4">
           <div class="mb-3 text-start">
             <label for="inputCadastraUsuario" class="form-label"
               ><i class="fas fa-at"></i> Endereço de Email</label
@@ -129,10 +124,7 @@
             <ErrorMessage name="senha2" class="text-danger" />
           </div>
           <div id="buttons" class="text-start w-100">
-            <button
-              @click.prevent="cadastraUsuario()"
-              class="btn btn-lg btn-warning border shadow mt-2"
-            >
+            <button class="btn btn-lg btn-warning border shadow mt-2 btncadastrarse">
               <i class="fas fa-user-plus"></i>
               Cadastrar-se
             </button>
@@ -140,31 +132,13 @@
         </Form>
       </div>
     </m-dialog>
-    <footer class="py-3 my-4">
-      <ul class="nav justify-content-center border-bottom pb-3 mb-3">
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-muted">Home</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-muted">Features</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-muted">Pricing</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-muted">FAQs</a>
-        </li>
-        <li class="nav-item">
-          <a href="#" class="nav-link px-2 text-muted">About</a>
-        </li>
-      </ul>
-      <p class="text-center text-muted">© 2022 Gerenciador Financeiro</p>
-    </footer>
+    <footerPage />
   </div>
 </template>
 
 <script>
 import { Field, Form, ErrorMessage } from "vee-validate";
+import footerPage from "@/components/footerPage.vue";
 
 export default {
   name: "loginUser",
@@ -172,6 +146,7 @@ export default {
     Field,
     Form,
     ErrorMessage,
+    footerPage,
   },
   data() {
     return {
@@ -188,8 +163,26 @@ export default {
     };
   },
   methods: {
+    loginUsuario() {
+      this.$router.push("dashboard/resumo");
+      this.$toast.success(`Usuário ${this.login.usuario} logado com sucesso!`, {
+        position: "top-right",
+        duration: 5000,
+        dismissible: true,
+      });
+    },
     cadastraUsuario() {
       console.log(this.cadastra);
+      this.$toast.success(
+        `Usuário ${this.cadastra.usuario} cadastrado com sucesso!`,
+        {
+          position: "top-right",
+          duration: 5000,
+          dismissible: true,
+        }
+      );
+      this.cadastra = {}
+      this.modalCadastro = false;
     },
     validaUsuario(email) {
       let usuario = email.substring(0, email.indexOf("@"));
@@ -222,35 +215,79 @@ export default {
       }
       return "Senhas não conferem";
     },
-
   },
 };
 </script>
 
 <style scoped>
-#buttonlogin {
-  background: #99adde !important;
+#inputCadastraUsuario {
+  border: 2px solid #2c7755;
+  background: white;
+}
+
+#inputSenha1 {
+  border: 2px solid #2c7755;
+  background: white;
+}
+
+#inputSenha2 {
+  border: 2px solid #2c7755;
+  background: white;
+}
+
+#inputLoginUsuario {
+  border: 2px solid #2c7755;
+  background: white;
+}
+
+#inputLoginSenha {
+  border: 2px solid #2c7755;
+  background: white;
+}
+
+.btncadastrarse:hover {
+  background: #2b5794 !important;
+}
+
+.btncadastrarse {
+  background: #183153;
+  color: white;
+}
+
+#btnlogingoogle:hover {
+  background: rgb(245, 192, 192) !important;
+}
+
+#buttonlogin:hover {
+  background: #2c7755 !important;
   color: white !important;
+}
+
+#buttonlogin {
+  background: #42b983 !important;
+  color: white !important;
+  font-size: 1.3em;
 }
 
 input {
   padding: 15px !important;
   font-size: 1.3em !important;
 }
+
 @media (max-width: 1380px) {
   #boxlogin {
     display: block !important;
   }
-  #cadeado {
-    display: none;
-  }
+
   #formulario {
     width: 70% !important;
     margin: auto;
   }
+
   #buttons {
     display: block !important;
   }
+
   .buttons {
     width: 100%;
     margin: auto !important;
@@ -260,22 +297,22 @@ input {
     width: 100% !important;
   }
   #imagemlogo {
-    width: 100% !important;
+    width: 70% !important;
   }
 }
 @media (max-width: 650px) {
   form {
     width: 100% !important;
   }
+
   #boxlogin {
     display: block !important;
   }
-  #cadeado {
-    display: none;
-  }
+
   #formulario {
     width: 100% !important;
   }
+
   #buttons {
     display: block !important;
   }
@@ -287,6 +324,7 @@ input {
   .inputs {
     width: 100% !important;
   }
+
   #imagemlogo {
     width: 100% !important;
   }

@@ -2,6 +2,7 @@
   <div class="container">
     <div id="search" class="row">
       <div id="texto" class="col-4 align-self-center fs-4">
+        <i class="fas fa-sign-in-alt"></i>
         Entradas Financeiras
       </div>
       <div id="filtrar" class="col-7 align-items-center d-flex ">
@@ -65,7 +66,7 @@ export default {
   }
 }
 #tablehead {
-  background-color: #99adde !important;
+  background-color: #42b983 !important;
   color: white !important;
   border-radius: 5px 5px 5px !important;
 }

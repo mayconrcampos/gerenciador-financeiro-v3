@@ -1,29 +1,13 @@
 <template>
   <div class="container">
     <div class="row">
-      <div class="col-md-4">
-        <div class="card p-3 py-4">
-          <div class="text-center">
-            <img
-              src="https://i.imgur.com/bDLhJiP.jpg"
-              width="100"
-              class="rounded-circle"
-            />
-          </div>
-
-          <div class="text-center mt-3">
-            <h5 class="mt-2 mb-0">Maycon R. Campos</h5>
-            <span>Dev FullStack</span>
-          </div>
-        </div>
-      </div>
-      <div class="card col-md-8 align-items-center">
+      <div class="card col-lg-12 align-items-center">
         <div class="row m-1 mt-3">
           <button
-            class="btnAddCategoria btn fs-4 mb-4 shadow m-auto"
+            class="btnAddCategoria btn fs-2 mb-4 shadow m-auto twoCards"
             @click="modalAddCategorias = true"
           >
-            Inserir Categorias de Lançamento
+            Inserir Categorias de Lançamentos
           </button>
 
           <!--------MODAL ADD CATEGORIAS DE LANÇAMENTOS--------->
@@ -39,10 +23,19 @@
               <input
                 type="text"
                 id="addcategoria"
-                class="form-control form-control-sm"
+                class="form-control form-control fs-5 mb-2"
               />
+              <label for="selectipo">Tipo de Lançamento</label>
+              <select
+                class="form-select fs-5"
+                id="selectipo"
+                aria-label="Categorias"
+              >
+                <option value="1">Entrada / Receita</option>
+                <option value="2">Saída / Despesa</option>
+              </select>
               <button
-                class="btnAddCategoria btn btn-sm mt-2"
+                class="btnAddCategoria btn mt-3 fs-3"
                 @click="modalAddCategorias = false"
               >
                 Salvar
@@ -51,10 +44,10 @@
           </m-dialog>
         </div>
 
-        <div class="d-flex flex-row">
-          <div class="col-lg-6">
+        <div id="cards" class="d-flex flex-row">
+          <div class="col-md-6 me-3">
             <div
-              class="btnAddCategoria border rounded p-4 shadow"
+              class="btnAddCategoria rounded rounded-4 p-4 twoCards shadow"
               style="width: 18rem"
               @click="modalListReceiras = true"
             >
@@ -66,9 +59,9 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-6">
+          <div class="col-md-6">
             <div
-              class="btnAddCategoria border rounded p-4 shadow"
+              class="btnAddCategoria rounded rounded-4 p-4 twoCards shadow"
               style="width: 18rem"
               @click="modalListDespesas = true"
             >
@@ -79,7 +72,6 @@
                 </p>
               </div>
             </div>
-
 
             <!--------MODAL LISTAR CATEGORIAS - RECEITAS FINANCEIRAS--------->
             <m-dialog
@@ -101,13 +93,17 @@
                       <tr>
                         <th scope="row">Salário</th>
                         <td class="text-center">
-                          <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                          <button class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
                         </td>
                       </tr>
                       <tr>
                         <th scope="row">Prestação de Serviço</th>
                         <td class="text-center">
-                          <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                          <button class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
                         </td>
                       </tr>
                     </tbody>
@@ -115,7 +111,6 @@
                 </div>
               </div>
             </m-dialog>
-
 
             <!--------MODAL LISTAR CATEGORIAS DESPESAS FINANCEIRAS--------->
             <m-dialog
@@ -137,13 +132,17 @@
                       <tr>
                         <th scope="row">Salário</th>
                         <td class="text-center">
-                          <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                          <button class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
                         </td>
                       </tr>
                       <tr>
                         <th scope="row">Prestação de Serviço</th>
                         <td class="text-center">
-                          <button class="btn btn-danger btn-sm"><i class="fas fa-trash-alt"></i></button>
+                          <button class="btn btn-danger btn-sm">
+                            <i class="fas fa-trash-alt"></i>
+                          </button>
                         </td>
                       </tr>
                     </tbody>
@@ -172,13 +171,23 @@ export default {
 </script>
 
 <style scoped>
+.twoCards:hover {
+  background: #2c7755 !important;
+  box-shadow: 5px 5px 15px rgb(121, 118, 118) !important;
+}
+
+@media (max-width: 1350px) {
+  #cards {
+    display: block !important;
+  }
+}
 .tablehead {
-  background-color: #99adde !important;
+  background-color: #42b983 !important;
   color: white !important;
   border-radius: 5px 5px 5px !important;
 }
 .btnAddCategoria {
-  background: #99adde !important;
+  background: #42b983 !important;
   color: white;
 }
 .card {
@@ -197,7 +206,7 @@ export default {
   top: 0;
   width: 4px;
   height: 100%;
-  background-color: #99adde;
+  background-color: #42b983;
   transform: scaleY(1);
   transition: all 0.5s;
   transform-origin: bottom;
@@ -210,7 +219,7 @@ export default {
   top: 0;
   width: 4px;
   height: 100%;
-  background-color: #d5e2fd;
+  background-color: #017a44;
   transform: scaleY(0);
   transition: all 0.5s;
   transform-origin: bottom;
@@ -220,40 +229,4 @@ export default {
   transform: scaleY(1);
 }
 
-.fonts {
-  font-size: 11px;
-}
-
-.social-list {
-  display: flex;
-  list-style: none;
-  justify-content: center;
-  padding: 0;
-}
-
-.social-list li {
-  padding: 10px;
-  color: #99adde;
-  font-size: 19px;
-}
-
-.buttons button:nth-child(1) {
-  border: 1px solid #99adde !important;
-  color: #99adde;
-  height: 40px;
-}
-
-.buttons button:nth-child(1):hover {
-  border: 1px solid #99adde !important;
-  color: #fff;
-  height: 40px;
-  background-color: #99adde;
-}
-
-.buttons button:nth-child(2) {
-  border: 1px solid #99adde !important;
-  background-color: #99adde;
-  color: #fff;
-  height: 40px;
-}
 </style>>
