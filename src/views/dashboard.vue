@@ -1,5 +1,5 @@
 <template>
-  <div class="container-lg bg-white rounded-4 shadow mt-5 p-5">
+  <div class="container-md bg-white rounded-4 shadow mt-5 p-5">
     <nav class="navbar navbar-expand-md bg-white">
       <div class="container-fluid">
         <a class="navbar-brand pe-3">
