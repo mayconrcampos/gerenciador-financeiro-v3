@@ -46,18 +46,21 @@
           >
             <button
               type="submit"
-              class="btn btn-md shadow buttons"
+              class="btn btn-lg w-100 shadow buttons"
               id="buttonlogin"
             >
               <i class="fas fa-unlock-alt"></i>
               Fazer Login
             </button>
-            <a id="btnlogingoogle" class="btn btn-md ms-1 border shadow buttons"
+          </div>
+          ou
+          <div class="row m-auto">
+            <a id="btnlogingoogle" class="btn btn-lg border shadow buttons mb-2"
               ><i class="fab fa-google me-1"></i> Login com Google</a
             >
             <button
               @click.prevent="modalCadastro = true"
-              class="btn btn-md btn-warning border shadow ms-1 buttons"
+              class="btn btn-lg btn-warning border shadow buttons"
               id="btncadastrarse"
             >
               <i class="fas fa-user-plus"></i>
@@ -136,7 +139,7 @@
 
 <script>
 import { Field, Form, ErrorMessage } from "vee-validate";
-import footerPage from "@/components/footerPage.vue"
+import footerPage from "@/components/footerPage.vue";
 
 export default {
   name: "loginUser",
@@ -173,7 +176,7 @@ export default {
       console.log(this.cadastra);
       this.$toast.success(
         `Usuário ${this.cadastra.usuario} cadastrado com sucesso!`,
-        { 
+        {
           position: "top-right",
           duration: 5000,
           dismissible: true,
@@ -226,8 +229,8 @@ export default {
 }
 
 #buttonlogin:hover {
-  background: #83f5c2 !important;
-  color: black !important;
+  background: #2c7755 !important;
+  color: white !important;
 }
 
 #buttonlogin {

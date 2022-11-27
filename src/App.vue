@@ -32,5 +32,6 @@ nav a.router-link-exact-active {
   color: white !important;
   background: #42b983;
   border-radius: 8px 8px 8px !important;
+  box-shadow: 5px 5px 15px rgb(121, 118, 118);
 }
 </style>

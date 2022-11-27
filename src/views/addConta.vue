@@ -130,4 +130,9 @@ export default {
   font-size: 1.5em;
   font-weight: bolder;
 }
+#submitButton:hover {
+  background: #2c7755 !important;
+  color: white !important;
+  box-shadow: 5px 5px 15px rgb(121, 118, 118);
+}
 </style>

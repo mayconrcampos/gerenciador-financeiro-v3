@@ -173,6 +173,7 @@ export default {
 <style scoped>
 .twoCards:hover {
   background: #2c7755 !important;
+  box-shadow: 5px 5px 15px rgb(121, 118, 118) !important;
 }
 
 @media (max-width: 1350px) {
