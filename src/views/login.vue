@@ -12,7 +12,7 @@
       <div id="formulario" class="col-6 m-auto">
         <Form @submit="loginUsuario" class="p-4 w-100">
           <div class="mb-3 text-start">
-            <label for="exampleInputEmail1" class="form-label"
+            <label for="inputLoginUsuario" class="form-label"
               ><i class="fas fa-at"></i> Endereço de Email</label
             >
             <Field
@@ -21,7 +21,7 @@
               :rules="validaUsuario"
               type="email"
               class="form-control shadow inputs"
-              id="exampleInputEmail1"
+              id="inputLoginUsuario"
               aria-describedby="emailHelp"
             />
             <ErrorMessage name="loginUsuario" class="text-danger" />
@@ -46,7 +46,7 @@
           >
             <button
               type="submit"
-              class="btn btn-lg w-100 shadow buttons"
+              class="btn btn-lg w-100 shadow buttons fs-5"
               id="buttonlogin"
             >
               <i class="fas fa-unlock-alt"></i>
@@ -55,13 +55,12 @@
           </div>
           ou
           <div class="row m-auto">
-            <a id="btnlogingoogle" class="btn btn-lg border shadow buttons mb-2"
+            <a id="btnlogingoogle" class="btn btn-lg border shadow buttons mb-2 fs-5"
               ><i class="fab fa-google me-1"></i> Login com Google</a
             >
             <button
               @click.prevent="modalCadastro = true"
-              class="btn btn-lg btn-warning border shadow buttons"
-              id="btncadastrarse"
+              class="btn btn-lg border shadow buttons fs-5 btncadastrarse"
             >
               <i class="fas fa-user-plus"></i>
               Cadastrar-se
@@ -125,7 +124,7 @@
             <ErrorMessage name="senha2" class="text-danger" />
           </div>
           <div id="buttons" class="text-start w-100">
-            <button class="btn btn-lg btn-warning border shadow mt-2">
+            <button class="btn btn-lg btn-warning border shadow mt-2 btncadastrarse">
               <i class="fas fa-user-plus"></i>
               Cadastrar-se
             </button>
@@ -182,6 +181,7 @@ export default {
           dismissible: true,
         }
       );
+      this.cadastra = {}
       this.modalCadastro = false;
     },
     validaUsuario(email) {
@@ -220,8 +220,38 @@ export default {
 </script>
 
 <style scoped>
-#btncadastrarse:hover {
-  background: #eecf6c !important;
+#inputCadastraUsuario {
+  border: 2px solid #2c7755;
+  background: white;
+}
+
+#inputSenha1 {
+  border: 2px solid #2c7755;
+  background: white;
+}
+
+#inputSenha2 {
+  border: 2px solid #2c7755;
+  background: white;
+}
+
+#inputLoginUsuario {
+  border: 2px solid #2c7755;
+  background: white;
+}
+
+#inputLoginSenha {
+  border: 2px solid #2c7755;
+  background: white;
+}
+
+.btncadastrarse:hover {
+  background: #2b5794 !important;
+}
+
+.btncadastrarse {
+  background: #183153;
+  color: white;
 }
 
 #btnlogingoogle:hover {

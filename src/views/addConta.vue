@@ -8,49 +8,49 @@
       <div class="form-floating mb-3">
         <select
           v-model="tipo"
-          class="form-select"
+          class="form-select inputsFields"
           id="categorias"
           aria-label="Categorias"
         >
           <option value="1">Entrada / Receita</option>
           <option value="2">Saída / Despesa</option>
         </select>
-        <label for="categorias">Despesa ou Receita</label>
+        <label for="categorias" class="inputLabels">Despesa ou Receita</label>
       </div>
       <div class="form-floating mb-3">
         <input
           v-model="descricao"
-          class="form-control"
+          class="form-control inputsFields"
           id="descricao"
           type="text"
           placeholder="Descrição"
         />
-        <label for="descricao">Descrição</label>
+        <label for="descricao" class="inputLabels">Descrição</label>
       </div>
       <div class="form-floating mb-3">
         <input
           v-model="valor"
-          class="form-control"
+          class="form-control inputsFields"
           id="valorR"
           type="text"
           placeholder="Valor R$"
         />
-        <label for="valorR">Valor R$</label>
+        <label for="valorR" class="inputLabels">Valor R$</label>
       </div>
       <div class="form-floating mb-3">
         <input
           v-model="data"
-          class="form-control"
+          class="form-control inputsFields"
           id="data"
           type="date"
           placeholder="Data"
         />
-        <label for="data">Data</label>
+        <label for="data" class="inputLabels">Data</label>
       </div>
       <div class="form-floating mb-3">
         <select
           v-model="categoria"
-          class="form-select"
+          class="form-select inputsFields"
           id="categorias"
           aria-label="Categorias"
           :disabled="categorias.length == 0"
@@ -59,18 +59,18 @@
             {{ cat }}
           </option>
         </select>
-        <label for="categorias">Categorias de lançamento</label>
+        <label for="categorias" class="inputLabels">Categorias de lançamento</label>
       </div>
       <div class="form-floating mb-3">
         <textarea
           v-model="comentario"
-          class="form-control"
+          class="form-control inputsFields"
           id="comentarios"
           type="text"
           placeholder="Comentários"
           style="height: 10rem"
         ></textarea>
-        <label for="comentarios">Comentários</label>
+        <label for="comentarios" class="inputLabels">Comentários</label>
       </div>
       <div class="d-grid">
         <button class="btn btn-lg" id="submitButton" type="submit">
@@ -119,6 +119,20 @@ export default {
 </script>
 
 <style scoped>
+.inputsFields:focus {
+  font-size: 1.1em;
+}
+.inputsFields:hover {
+  background: #42b983;
+  color: white;
+}
+.inputsFields {
+  border: 2px solid #2c7755;
+  background: white;
+  font-size: 0.9em;
+  font-weight: bold;
+}
+
 @media (max-width: 650px) {
   #radios {
     display: block !important;
