@@ -61,7 +61,6 @@
     <footer class="footer mt-auto">
       <footerPage />
     </footer>
-    {{ windowWidth }}
   </div>
 </template>
 
