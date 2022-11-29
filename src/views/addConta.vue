@@ -4,7 +4,7 @@
       <i class="fas fa-plus"></i>
       Lance aqui seus ganhos e gastos
     </div>
-    <Form id="contactForm">
+    <Form id="contactForm" @submit="addConta">
       <div class="form-floating mb-3">
         <select
           v-model="tipo"
@@ -138,7 +138,26 @@ export default {
       }
     },
   },
+  computed: {
+    tipoConta() {
+      return this.tipo == "1" ? 'Entrada Financeira' : "Saída Financeira"
+    }
+  },
   methods: {
+    addConta() {
+      console.log(this.tipo, this.descricao, this.valor, this.data, this.categoria, this.comentario)
+      this.$toast.success(`${this.tipoConta} adicionada com sucesso`, { position: "top" })
+      this.limparCampos()
+      this.$router.push("/dashboard/entradas")
+    },
+    limparCampos(){
+      this.tipo = "1"
+      this.descricao = ""
+      this.valor = ""
+      this.data = ""
+      this.categoria = ""
+      this.comentario = ""
+    },
     validaDescricao(value) {
       if(value.length > 2) {
         return true
