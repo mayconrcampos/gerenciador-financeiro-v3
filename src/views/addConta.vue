@@ -4,7 +4,7 @@
       <i class="fas fa-plus"></i>
       Lance aqui seus ganhos e gastos
     </div>
-    <form id="contactForm">
+    <Form id="contactForm">
       <div class="form-floating mb-3">
         <select
           v-model="tipo"
@@ -22,8 +22,10 @@
         </label>
       </div>
       <div class="form-floating mb-3">
-        <input
+        <Field
           v-model="descricao"
+          name="descricao"
+          :rules="validaDescricao"
           class="form-control inputsFields"
           id="descricao"
           type="text"
@@ -32,10 +34,13 @@
         <label for="descricao" class="inputLabels"
           ><i class="far fa-sticky-note"></i> Descrição</label
         >
+        <ErrorMessage name="descricao" class="text-danger" />
       </div>
       <div class="form-floating mb-3">
-        <input
+        <Field
           v-model="valor"
+          name="valor"
+          :rules="validaValor"
           class="form-control inputsFields"
           id="valorR"
           type="text"
@@ -44,6 +49,7 @@
         <label for="valorR" class="inputLabels"
           ><i class="fas fa-money-bill-wave-alt"></i> Valor (R$)</label
         >
+        <ErrorMessage name="valor" class="text-danger" />
       </div>
       <div class="form-floating mb-3">
         <input
@@ -58,8 +64,11 @@
         >
       </div>
       <div class="form-floating mb-3">
-        <select
+        <Field
           v-model="categoria"
+          name="categoria"
+          as="select"
+          :rules="validaCategoria"
           class="form-select inputsFields"
           id="categorias"
           aria-label="Categorias"
@@ -68,12 +77,13 @@
           <option v-for="(cat, key) in categorias" :key="key" :value="cat">
             {{ cat }}
           </option>
-        </select>
+        </Field>
         <label for="categorias" class="inputLabels">
           <i v-if="tipo == '2'" class="fas fa-chevron-circle-up"></i>
           <i v-else class="fas fa-chevron-circle-down"></i>
           Categorias de lançamento
         </label>
+        <ErrorMessage name="categoria" class="text-danger" />
       </div>
       <div class="form-floating mb-3">
         <textarea
@@ -93,7 +103,7 @@
           Cadastrar
         </button>
       </div>
-    </form>
+    </Form>
   </div>
 </template>
 
@@ -127,6 +137,28 @@ export default {
         this.categorias = this.categoriaSaida;
       }
     },
+  },
+  methods: {
+    validaDescricao(value) {
+      if(value.length > 2) {
+        return true
+      }
+      return "A descrição deve ter acima de 2 caracteres"
+    },
+    validaValor(value) {
+      let num = value.replace(",", ".")
+      if(isNaN(num) || value == "") {
+        console.log(num, typeof(num))
+        return "Valor não numérico."
+      }
+      return true
+    },
+    validaCategoria(value) {
+      if (value) {
+        return true
+      }
+      return "Selecione uma categoria"
+    }
   },
   mounted() {
     this.categorias = this.categoriaEntrada;
