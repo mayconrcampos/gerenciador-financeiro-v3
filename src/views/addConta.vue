@@ -148,7 +148,6 @@ export default {
     validaValor(value) {
       let num = value.replace(",", ".")
       if(isNaN(num) || value == "") {
-        console.log(num, typeof(num))
         return "Valor não numérico."
       }
       return true
