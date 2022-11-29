@@ -8,6 +8,7 @@
         <button
           class="navbar-toggler"
           type="button"
+          :style="`${navBarShow ? 'background:#42b983;color:white;': 'background:#42b983;color:#black'}`"
           @click="collapseNavBar()"
           data-bs-toggle="collapse"
           data-bs-target="#navbar"
