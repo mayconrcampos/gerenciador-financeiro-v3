@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-md bg-white">
       <div class="container-fluid">
         <a class="navbar-brand pe-3">
-          <h1><i class="fas fa-dollar-sign mt-3"></i></h1>
+          <h1><i class="fas fa-dollar-sign mt-3" id="simbolo"></i></h1>
         </a>
         <button
           class="navbar-toggler"
@@ -20,13 +20,13 @@
         </button>
         <Transition>
           <div
-            v-if="navBarShow || windowWidth > 770"
+            v-if="(navBarShow || windowWidth > 768)"
             class="navbar-collapse"
             id=""
           >
             <div
               :class="`navbar-nav d-flex ${
-                windowWidth > 768 ? 'flex-row' : 'flex-column'
+                windowWidth > 770 ? 'flex-row' : 'flex-column'
               }`"
             >
               <router-link class="nav-link fs-5 me-2" to="/dashboard/addConta"
@@ -125,5 +125,8 @@ export default {
   #imagemlogo {
     display: none !important;
   }
+}
+#simbolo {
+  color: #42b983;
 }
 </style>
