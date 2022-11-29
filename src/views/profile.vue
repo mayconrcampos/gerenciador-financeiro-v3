@@ -213,6 +213,12 @@ export default {
     display: block !important;
   }
 }
+#selectipo {
+  border: 2px solid #2c7755;
+}
+#addcategoria {
+  border: 2px solid #2c7755;
+}
 .tablehead {
   background-color: #42b983 !important;
   color: white !important;
