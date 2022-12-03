@@ -172,7 +172,7 @@ export default {
       });
     },
     cadastraUsuario() {
-      console.log(this.cadastra);
+      
       this.$toast.success(
         `Usuário ${this.cadastra.usuario} cadastrado com sucesso!`,
         {
