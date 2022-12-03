@@ -139,6 +139,7 @@
 <script>
 import { Field, Form, ErrorMessage } from "vee-validate";
 import footerPage from "@/components/footerPage.vue";
+import { mapActions } from 'vuex';
 
 export default {
   name: "loginUser",
@@ -163,6 +164,7 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["createUser"]),
     loginUsuario() {
       this.$router.push("dashboard/resumo");
       this.$toast.success(`Usuário ${this.login.usuario} logado com sucesso!`, {
@@ -172,7 +174,9 @@ export default {
       });
     },
     cadastraUsuario() {
-      
+      this.createUser({
+        
+      })
       this.$toast.success(
         `Usuário ${this.cadastra.usuario} cadastrado com sucesso!`,
         {
