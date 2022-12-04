@@ -8,7 +8,8 @@ export default {
             email: "",
             user_id: ""
         },
-        sucesso: false
+        sucesso: false,
+        msgResponse: "",
 
     },
     mutations: {
@@ -17,21 +18,25 @@ export default {
         },
         setSucesso(state, status) {
             state.sucesso = status
-        } 
+        },
+        setMsgResponse(state, msg) {
+            state.msgResponse = msg
+        }
 
     },
     actions: {
         async createUser(context, user){
             context.commit("setSucesso", false)
-            await axios.post("http://127.0.0.1:5000/users", {
-                "name": user.name,
-                "email": user.email,
-                "password": user.password,
+            await axios.post("http://127.0.0.1:5000/users/", {
+                "email": user.usuario,
+                "password": user.senha2,
             }).then((res) => {
                 console.log(res.data)
+                context.commit("setMsgResponse", `Usuário ${user.usuario} cadastrado com sucesso.`)
                 context.commit("setSucesso", true)
             }).catch((err) => {
-                console.log(err)
+                context.commit("setMsgResponse", err.response.data.error)
+                
             })
         } 
 
