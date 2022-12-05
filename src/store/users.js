@@ -21,6 +21,9 @@ export default {
         },
         setMsgResponse(state, msg) {
             state.msgResponse = msg
+        },
+        setUser(state, user) {
+            state.user = user
         }
 
     },
@@ -37,6 +40,12 @@ export default {
             }).catch((err) => {
                 context.commit("setMsgResponse", err.response.data.error)
                 
+            })
+        },
+        async goToGoogleAuthLink() {
+            await axios.post("http://127.0.0.1:5000/users/auth/google")
+            .then((resp) => {
+                return window.open(resp.data.url)
             })
         } 
 

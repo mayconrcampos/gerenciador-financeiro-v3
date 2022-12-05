@@ -57,6 +57,7 @@
           <div class="row m-auto">
             <a
               id="btnlogingoogle"
+              @click="goToAuth"
               class="btn btn-lg border shadow buttons mb-2 fs-5"
               ><i class="fab fa-google me-1"></i> Login com Google</a
             >
@@ -174,7 +175,10 @@ export default {
     }),
   },
   methods: {
-    ...mapActions(["createUser"]),
+    ...mapActions(["createUser", "goToGoogleAuthLink"]),
+    goToAuth() {
+      this.goToGoogleAuthLink()
+    },
     loginUsuario() {
       this.$router.push("dashboard/resumo");
       this.$toast.success(`Usuário ${this.login.usuario} logado com sucesso!`, {
