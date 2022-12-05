@@ -24,7 +24,8 @@ const routes = [
     name: "dashboard",
     component: dashboard,
     meta: {
-      title: "Menu Dashboard"
+      title: "Menu Dashboard",
+      auth: true,
     },
     children: [
       {
@@ -93,6 +94,17 @@ router.beforeEach((to, from, next) => {
 
     toast.createToaster().success(`Bem vindo(a), ${user.email}!`, { position: "top" })
 
+    next("/dashboard/profile")
+  } else {
+    next()
+  }
+})
+
+// Protegendo rotas para usuários logados
+router.beforeEach((to, from, next) => {
+  if (to.meta.auth && !localStorage.getItem("user_logado")) {
+    next("/")
+  } else if (!to.meta.auth && localStorage.getItem("user_logado")) {
     next("/dashboard/profile")
   } else {
     next()
