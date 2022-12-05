@@ -55,7 +55,10 @@
           </div>
           ou
           <div class="row m-auto">
-            <a id="btnlogingoogle" class="btn btn-lg border shadow buttons mb-2 fs-5"
+            <a
+              id="btnlogingoogle"
+              @click="goToAuth"
+              class="btn btn-lg border shadow buttons mb-2 fs-5"
               ><i class="fab fa-google me-1"></i> Login com Google</a
             >
             <button
@@ -124,7 +127,9 @@
             <ErrorMessage name="senha2" class="text-danger" />
           </div>
           <div id="buttons" class="text-start w-100">
-            <button class="btn btn-lg btn-warning border shadow mt-2 btncadastrarse">
+            <button
+              class="btn btn-lg btn-warning border shadow mt-2 btncadastrarse"
+            >
               <i class="fas fa-user-plus"></i>
               Cadastrar-se
             </button>
@@ -139,7 +144,7 @@
 <script>
 import { Field, Form, ErrorMessage } from "vee-validate";
 import footerPage from "@/components/footerPage.vue";
-import { mapActions } from 'vuex';
+import { mapActions, mapState } from "vuex";
 
 export default {
   name: "loginUser",
@@ -163,8 +168,17 @@ export default {
       },
     };
   },
+  computed: {
+    ...mapState({
+      msgResponse: (state) => state.users.msgResponse,
+      sucesso: (state) => state.users.sucesso,
+    }),
+  },
   methods: {
-    ...mapActions(["createUser"]),
+    ...mapActions(["createUser", "goToGoogleAuthLink"]),
+    goToAuth() {
+      this.goToGoogleAuthLink()
+    },
     loginUsuario() {
       this.$router.push("dashboard/resumo");
       this.$toast.success(`Usuário ${this.login.usuario} logado com sucesso!`, {
@@ -174,19 +188,29 @@ export default {
       });
     },
     cadastraUsuario() {
-      this.createUser({
-        
-      })
-      this.$toast.success(
-        `Usuário ${this.cadastra.usuario} cadastrado com sucesso!`,
-        {
-          position: "top-right",
-          duration: 5000,
-          dismissible: true,
-        }
-      );
-      this.cadastra = {}
-      this.modalCadastro = false;
+      this.createUser(this.cadastra)
+        .then(() => {
+          if (this.sucesso) {
+            this.$toast.success(this.msgResponse, {
+              position: "top-right",
+              duration: 5000,
+              dismissible: true,
+            });
+          } else {
+            this.$toast.warning(this.msgResponse, {
+              position: "top-right",
+              duration: 5000,
+              dismissible: true,
+            });
+          }
+        })
+        .catch((e) => {
+          console.error(e);
+        })
+        .finally(() => {
+          this.cadastra = {};
+          this.modalCadastro = false;
+        })
     },
     validaUsuario(email) {
       let usuario = email.substring(0, email.indexOf("@"));
