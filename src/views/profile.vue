@@ -17,29 +17,35 @@
             :draggable="true"
           >
             <div class="row p-2">
-              <label class="col-form-label" for="addcategoria">
-                Digite nova Categoria
-              </label>
-              <input
-                type="text"
-                id="addcategoria"
-                class="form-control form-control fs-5 mb-2"
-              />
-              <label for="selectipo">Tipo de Lançamento</label>
-              <select
-                class="form-select fs-5"
-                id="selectipo"
-                aria-label="Categorias"
-              >
-                <option value="1">Entrada / Receita</option>
-                <option value="2">Saída / Despesa</option>
-              </select>
-              <button
-                class="btnAddCategoria btn mt-3 fs-3"
-                @click="modalAddCategorias = false"
-              >
-                Salvar
-              </button>
+              <Form @submit="addCategoria">
+                <label class="col-form-label" for="addcategoria">
+                  Digite nova Categoria
+                </label>
+                <Field
+                  type="text"
+                  v-model="categoria"
+                  name="categoria"
+                  :rules="validaCategoria"
+                  id="addcategoria"
+                  class="form-control form-control fs-5 mb-2"
+                />
+                <ErrorMessage name="categoria" class="text-danger" />
+                <label for="selectipo">Tipo de Lançamento</label>
+                <select
+                  v-model="tipo"
+                  class="form-select fs-5"
+                  id="selectipo"
+                  aria-label="Categorias"
+                >
+                  <option selected value="1">Entrada / Receita</option>
+                  <option value="2">Saída / Despesa</option>
+                </select>
+                <button
+                  class="btnAddCategoria btn mt-3 fs-3"
+                >
+                  Salvar
+                </button>
+              </Form>
             </div>
           </m-dialog>
         </div>
@@ -158,14 +164,40 @@
 </template>
 
 <script>
+import { Field, Form, ErrorMessage } from "vee-validate";
 export default {
   name: "proFile",
+  components: {
+    Field,
+    Form,
+    ErrorMessage,
+  },
   data() {
     return {
       modalAddCategorias: false,
       modalListReceiras: false,
       modalListDespesas: false,
+      categoria: "",
+      tipo: "1",
     };
+  },
+  computed: {
+    tipoCategoria() {
+      return this.tipo == "1" ? 'Entrada / Receita' : 'Saída / Despesa'
+    }
+  },
+  methods: {
+    addCategoria() {
+      this.$toast.success(`Categoria de ${this.tipoCategoria} cadastrada com sucesso`, { position: "top" })
+      this.categoria = ""
+      this.modalAddCategorias = false
+    },
+    validaCategoria(value) {
+      if(value.length > 4) {
+        return true
+      }
+      return "Somente categorias acima de 4 caracteres."
+    }
   },
 };
 </script>
@@ -180,6 +212,12 @@ export default {
   #cards {
     display: block !important;
   }
+}
+#selectipo {
+  border: 2px solid #2c7755;
+}
+#addcategoria {
+  border: 2px solid #2c7755;
 }
 .tablehead {
   background-color: #42b983 !important;
@@ -228,5 +266,4 @@ export default {
 .card:hover::after {
   transform: scaleY(1);
 }
-
 </style>>
