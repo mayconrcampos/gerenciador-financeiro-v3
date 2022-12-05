@@ -29,7 +29,7 @@
                 windowWidth > 770 ? 'flex-row' : 'flex-column'
               }`"
             >
-              <router-link class="nav-link fs-5 me-2" to="/dashboard/addConta"
+            <router-link class="nav-link fs-5 me-2" to="/dashboard/addConta"
                 ><i class="fas fa-plus"></i> Add Transação</router-link
               >
               <router-link class="nav-link fs-5 me-2" to="/dashboard/entradas"
@@ -44,8 +44,8 @@
               <router-link class="nav-link fs-5 me-2" to="/dashboard/profile"
                 ><i class="fas fa-user"></i> Minha Conta</router-link
               >
-              <router-link class="nav-link fs-5" to="/"
-                ><i class="fas fa-door-open"></i> Sair</router-link
+              <a id="sair" class="nav-link fs-5" @click="sair()"
+                ><i class="fas fa-door-open"></i> Sair</a
               >
             </div>
           </div>
@@ -67,6 +67,7 @@
 
 <script>
 import footerPage from "@/components/footerPage.vue";
+import { mapActions } from 'vuex';
 export default {
   name: "dashBoard",
   components: {
@@ -79,6 +80,12 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["logoutUser"]),
+    sair() {
+      this.logoutUser().then(() => {
+        this.$router.push("/")
+      })
+    },
     collapseNavBar() {
       this.navBarShow = !this.navBarShow;
     },
@@ -97,7 +104,9 @@ export default {
 </script>
 
 <style scoped>
-/* we will explain what these classes do next! */
+#sair {
+  cursor: pointer;
+}
 .v-enter-active,
 .v-leave-active {
   transition: opacity 0.5s ease-in-out;
@@ -107,7 +116,6 @@ export default {
 .v-leave-to {
   opacity: 0;
 }
-
 .nav-link:hover {
   color: white !important;
   background: #42b983;

@@ -175,17 +175,31 @@ export default {
     }),
   },
   methods: {
-    ...mapActions(["createUser", "goToGoogleAuthLink"]),
+    ...mapActions(["createUser", "goToGoogleAuthLink", "loginUser"]),
     goToAuth() {
       this.goToGoogleAuthLink()
     },
     loginUsuario() {
-      this.$router.push("dashboard/resumo");
-      this.$toast.success(`Usuário ${this.login.usuario} logado com sucesso!`, {
-        position: "top-right",
-        duration: 5000,
-        dismissible: true,
-      });
+      this.loginUser({
+        "email": this.login.usuario,
+        "password": this.login.senha
+      })
+      .then(() => {
+        if (this.sucesso) {
+          this.$router.push("/dashboard/profile")  
+        } else {
+          this.limpaCamposLogin()
+        }
+      })
+      .catch((e) => {
+        console.error("err: ", e)
+      })
+    },
+    limpaCamposLogin() {
+      this.login = {
+        "usuario": "",
+        "senha": ""
+      }
     },
     cadastraUsuario() {
       this.createUser(this.cadastra)
@@ -208,7 +222,11 @@ export default {
           console.error(e);
         })
         .finally(() => {
-          this.cadastra = {};
+          this.cadastra = {
+            "usuario": "",
+            "senha1": "",
+            "senha2": "",
+          };
           this.modalCadastro = false;
         })
     },
