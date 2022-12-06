@@ -53,8 +53,8 @@
       </div>
     </nav>
     <hr />
-    <div class="text-start ms-3">
-      <small>Usuário: maycon.campos@gmail.com</small>
+    <div class="text-center ms-3">
+      <small class="badge bg-white text-dark">Usuário: {{ emailUser }}</small>
     </div>
     <div class="row mt-5">
       <router-view></router-view>
@@ -67,7 +67,7 @@
 
 <script>
 import footerPage from "@/components/footerPage.vue";
-import { mapActions } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from 'vuex';
 export default {
   name: "dashBoard",
   components: {
@@ -79,7 +79,11 @@ export default {
       windowWidth: "",
     };
   },
+  computed: {
+    ...mapGetters(["emailUser"]),
+  },
   methods: {
+    ...mapMutations(["setUser"]),
     ...mapActions(["logoutUser"]),
     sair() {
       this.logoutUser().then(() => {
@@ -96,6 +100,12 @@ export default {
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
+    this.setUser({
+      "email": JSON.parse(localStorage.getItem("user_logado")).email,
+      "token": JSON.parse(localStorage.getItem("user_logado")).token,
+      "id_user": JSON.parse(localStorage.getItem("user_logado")).id_user,
+      "logged": true,
+    })
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
