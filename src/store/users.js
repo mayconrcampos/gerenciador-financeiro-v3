@@ -78,6 +78,8 @@ export default {
 
     },
     getters:{
-
+        emailUser: (state) => {
+            return state.user.email
+        }
     }
 }
