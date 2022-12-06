@@ -3,11 +3,13 @@
     <nav class="navbar navbar-expand-md bg-white">
       <div class="container-fluid">
         <a class="navbar-brand pe-3">
-          <h1><i class="fas fa-dollar-sign mt-3"></i></h1>
+          <h1><i class="fas fa-dollar-sign mt-3" id="simbolo"></i></h1>
         </a>
         <button
           class="navbar-toggler"
           type="button"
+          :style="`${navBarShow ? 'background:#42b983;color:white;': 'background:#42b983;color:#black'}`"
+          @click="collapseNavBar()"
           data-bs-toggle="collapse"
           data-bs-target="#navbar"
           aria-controls="navbar"
@@ -16,28 +18,38 @@
         >
           <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbar">
-          <div class="navbar-nav">
-            <router-link class="nav-link fs-5 me-2" to="/dashboard/addConta"
-              ><i class="fas fa-plus"></i> Add Transação</router-link
+        <Transition>
+          <div
+            v-if="(navBarShow || windowWidth > 768)"
+            class="navbar-collapse"
+            id=""
+          >
+            <div
+              :class="`navbar-nav d-flex ${
+                windowWidth > 770 ? 'flex-row' : 'flex-column'
+              }`"
             >
-            <router-link class="nav-link fs-5 me-2" to="/dashboard/entradas"
-              ><i class="fas fa-sign-in-alt"></i> Entradas</router-link
-            >
-            <router-link class="nav-link fs-5 me-2" to="/dashboard/saidas"
-              ><i class="fas fa-sign-out-alt"></i> Saídas</router-link
-            >
-            <router-link class="nav-link fs-5 me-2" to="/dashboard/resumo"
-              ><i class="fas fa-list"></i> Resumo</router-link
-            >
-            <router-link class="nav-link fs-5 me-2" to="/dashboard/profile"
-              ><i class="fas fa-user"></i> Minha Conta</router-link
-            >
-            <router-link class="nav-link fs-5" to="/"
-              ><i class="fas fa-door-open"></i> Sair</router-link
-            >
+              <router-link class="nav-link fs-5 me-2" to="/dashboard/addConta"
+                ><i class="fas fa-plus"></i> Add Transação</router-link
+              >
+              <router-link class="nav-link fs-5 me-2" to="/dashboard/entradas"
+                ><i class="fas fa-sign-in-alt"></i> Entradas</router-link
+              >
+              <router-link class="nav-link fs-5 me-2" to="/dashboard/saidas"
+                ><i class="fas fa-sign-out-alt"></i> Saídas</router-link
+              >
+              <router-link class="nav-link fs-5 me-2" to="/dashboard/resumo"
+                ><i class="fas fa-list"></i> Resumo</router-link
+              >
+              <router-link class="nav-link fs-5 me-2" to="/dashboard/profile"
+                ><i class="fas fa-user"></i> Minha Conta</router-link
+              >
+              <router-link class="nav-link fs-5" to="/"
+                ><i class="fas fa-door-open"></i> Sair</router-link
+              >
+            </div>
           </div>
-        </div>
+        </Transition>
       </div>
     </nav>
     <hr />
@@ -61,12 +73,41 @@ export default {
     footerPage,
   },
   data() {
-    return {};
+    return {
+      navBarShow: false,
+      windowWidth: "",
+    };
+  },
+  methods: {
+    collapseNavBar() {
+      this.navBarShow = !this.navBarShow;
+    },
+    handleResize() {
+      this.windowWidth = window.innerWidth;
+    },
+  },
+  created() {
+    window.addEventListener("resize", this.handleResize);
+    this.handleResize();
+  },
+  destroyed() {
+    window.removeEventListener("resize", this.handleResize);
   },
 };
 </script>
 
 <style scoped>
+/* we will explain what these classes do next! */
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease-in-out;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
+
 .nav-link:hover {
   color: white !important;
   background: #42b983;
@@ -84,5 +125,8 @@ export default {
   #imagemlogo {
     display: none !important;
   }
+}
+#simbolo {
+  color: #42b983;
 }
 </style>
