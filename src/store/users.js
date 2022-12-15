@@ -80,6 +80,9 @@ export default {
     getters:{
         emailUser: (state) => {
             return state.user.email
+        },
+        showUser: (state) => {
+            return state.user
         }
     }
 }

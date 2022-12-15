@@ -40,11 +40,7 @@
                   <option selected value="1">Entrada / Receita</option>
                   <option value="2">Saída / Despesa</option>
                 </select>
-                <button
-                  class="btnAddCategoria btn mt-3 fs-3"
-                >
-                  Salvar
-                </button>
+                <button class="btnAddCategoria btn mt-3 fs-3">Salvar</button>
               </Form>
             </div>
           </m-dialog>
@@ -55,7 +51,7 @@
             <div
               class="btnAddCategoria rounded rounded-4 p-4 twoCards shadow"
               style="width: 18rem"
-              @click="modalListReceiras = true"
+              @click="modalListReceitas = true"
             >
               <h1><i class="fas fa-coins"></i></h1>
               <div class="card-body">
@@ -81,7 +77,7 @@
 
             <!--------MODAL LISTAR CATEGORIAS - RECEITAS FINANCEIRAS--------->
             <m-dialog
-              v-model="modalListReceiras"
+              v-model="modalListReceitas"
               title="Lista de Categorias de Receitas Financeiras"
               :draggable="true"
               width="650px"
@@ -165,6 +161,7 @@
 
 <script>
 import { Field, Form, ErrorMessage } from "vee-validate";
+import { mapActions, mapGetters } from "vuex";
 export default {
   name: "proFile",
   components: {
@@ -175,29 +172,55 @@ export default {
   data() {
     return {
       modalAddCategorias: false,
-      modalListReceiras: false,
+      modalListReceitas: false,
       modalListDespesas: false,
       categoria: "",
       tipo: "1",
     };
   },
   computed: {
+    ...mapGetters(["showUser", "sucesso", "listaReceitas", "listaDespesas"]),
     tipoCategoria() {
-      return this.tipo == "1" ? 'Entrada / Receita' : 'Saída / Despesa'
-    }
+      return this.tipo == "1" ? "Entrada / Receita" : "Saída / Despesa";
+    },
   },
   methods: {
+    ...mapActions([
+      "addCategoriaLancamento",
+      "carregarCategoriasReceitas",
+      "carregarCategoriasDespesas",
+    ]),
     addCategoria() {
-      this.$toast.success(`Categoria de ${this.tipoCategoria} cadastrada com sucesso`, { position: "top" })
-      this.categoria = ""
-      this.modalAddCategorias = false
+      let payload = {
+        categoria: this.categoria,
+        tipo: this.tipo,
+        id_user: this.showUser.id_user,
+        token: this.showUser.token,
+      };
+      this.addCategoriaLancamento(payload).then(() => {
+        if (this.sucesso) {
+          this.modalAddCategorias = false;
+          if (this.tipo == "1") {
+            this.modalListReceitas = true;
+            this.carregarCategoriasReceitas(this.showUser)
+          } else {
+            this.carregarCategoriasDespesas(this.showUser)
+            this.modalListDespesas = true;
+          }
+        }
+      });
     },
     validaCategoria(value) {
-      if(value.length > 4) {
-        return true
+      if (value.length > 4) {
+        return true;
       }
-      return "Somente categorias acima de 4 caracteres."
-    }
+      return "Somente categorias acima de 4 caracteres.";
+    },
+  },
+  mounted() {
+    console.log(this.showUser)
+    this.carregarCategoriasDespesas(this.showUser)
+    this.carregarCategoriasReceitas(this.showUser)
   },
 };
 </script>
