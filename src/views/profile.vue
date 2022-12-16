@@ -253,8 +253,12 @@ export default {
     },
   },
   mounted() {
-    this.carregarCategoriasDespesas(this.showUser);
-    this.carregarCategoriasReceitas(this.showUser);
+    if (!this.qtdeDespesas) {
+      this.carregarCategoriasDespesas(this.showUser);
+    }
+    if (!this.qtdeReceitas) {
+      this.carregarCategoriasReceitas(this.showUser);
+    }
   },
 };
 </script>
