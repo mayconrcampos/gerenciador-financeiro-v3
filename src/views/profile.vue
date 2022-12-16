@@ -57,6 +57,7 @@
               <div class="card-body">
                 <p class="card-text fs-5">
                   Lista de Entradas / Receitas Financeiras
+                  <span class="badge text-bg-secondary">{{ qtdeReceitas }}</span>
                 </p>
               </div>
             </div>
@@ -71,6 +72,7 @@
               <div class="card-body">
                 <p class="card-text fs-5">
                   Lista de Saídas / Despesas financeiras
+                  <span class="badge text-bg-secondary">{{ qtdeDespesas }}</span>
                 </p>
               </div>
             </div>
@@ -91,11 +93,19 @@
                         <th class="text-center" scope="col">Ações</th>
                       </tr>
                     </thead>
-                    <tbody v-for="(receita, chave) in listaReceitas" :key="chave">
+                    <tbody
+                      v-for="(receita, chave) in listaReceitas"
+                      :key="chave"
+                    >
                       <tr>
                         <th scope="row">{{ receita.categoria }}</th>
                         <td class="text-center">
-                          <button class="btn btn-danger btn-sm">
+                          <button
+                            @click="
+                              excluiCategoria(receita._id.$oid, receita.tipo)
+                            "
+                            class="btn btn-danger btn-sm"
+                          >
                             <i class="fas fa-trash-alt"></i>
                           </button>
                         </td>
@@ -122,11 +132,19 @@
                         <th class="text-center" scope="col">Ações</th>
                       </tr>
                     </thead>
-                    <tbody v-for="(despesa, chave) in listaDespesas" :key="chave">
+                    <tbody
+                      v-for="(despesa, chave) in listaDespesas"
+                      :key="chave"
+                    >
                       <tr>
                         <th scope="row">{{ despesa.categoria }}</th>
                         <td class="text-center">
-                          <button class="btn btn-danger btn-sm">
+                          <button
+                            @click="
+                              excluiCategoria(despesa._id.$oid, despesa.tipo)
+                            "
+                            class="btn btn-danger btn-sm"
+                          >
                             <i class="fas fa-trash-alt"></i>
                           </button>
                         </td>
@@ -163,7 +181,14 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["showUser", "sucesso", "listaReceitas", "listaDespesas"]),
+    ...mapGetters([
+      "showUser",
+      "sucesso",
+      "listaReceitas",
+      "listaDespesas",
+      "qtdeReceitas",
+      "qtdeDespesas",
+    ]),
     tipoCategoria() {
       return this.tipo == "1" ? "Entrada / Receita" : "Saída / Despesa";
     },
@@ -173,6 +198,7 @@ export default {
       "addCategoriaLancamento",
       "carregarCategoriasReceitas",
       "carregarCategoriasDespesas",
+      "deleteCategoria",
     ]),
     addCategoria() {
       let payload = {
@@ -181,18 +207,39 @@ export default {
         id_user: this.showUser.id_user,
         token: this.showUser.token,
       };
-      this.addCategoriaLancamento(payload).then(() => {
-        if (this.sucesso) {
-          this.modalAddCategorias = false;
-          if (this.tipo == "1") {
-            this.modalListReceitas = true;
-            this.carregarCategoriasReceitas(this.showUser)
-          } else {
-            this.modalListDespesas = true;
-            this.carregarCategoriasDespesas(this.showUser)
+      this.addCategoriaLancamento(payload)
+        .then(() => {
+          if (this.sucesso) {
+            this.modalAddCategorias = false;
+            if (this.tipo == "1") {
+              this.modalListReceitas = true;
+              this.carregarCategoriasReceitas(this.showUser);
+            } else {
+              this.modalListDespesas = true;
+              this.carregarCategoriasDespesas(this.showUser);
+            }
           }
-        }
-      });
+        })
+        .finally(() => {
+          this.limpaCampos();
+        });
+    },
+    excluiCategoria(idDespesa, tipo) {
+      if (confirm("Deseja mesmo excluir esta categoria?")) {
+        let payload = {
+          token: this.showUser.token,
+          id_categoria: idDespesa,
+        };
+        this.deleteCategoria(payload).then(() => {
+          if (this.sucesso) {
+            if (tipo == "1") {
+              this.carregarCategoriasReceitas(this.showUser);
+            } else {
+              this.carregarCategoriasDespesas(this.showUser);
+            }
+          }
+        });
+      }
     },
     validaCategoria(value) {
       if (value.length > 4) {
@@ -200,10 +247,14 @@ export default {
       }
       return "Somente categorias acima de 4 caracteres.";
     },
+    limpaCampos() {
+      this.tipo = "1";
+      this.categoria = "";
+    },
   },
   mounted() {
-    this.carregarCategoriasDespesas(this.showUser)
-    this.carregarCategoriasReceitas(this.showUser)
+    this.carregarCategoriasDespesas(this.showUser);
+    this.carregarCategoriasReceitas(this.showUser);
   },
 };
 </script>
