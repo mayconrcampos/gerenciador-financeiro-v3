@@ -57,7 +57,7 @@
               <div class="card-body">
                 <p class="card-text fs-5">
                   Lista de Entradas / Receitas Financeiras
-                  <span class="badge text-bg-secondary">{{ qtdeReceitas }}</span>
+                  <span class="badge text-bg-success">{{ qtdeReceitas }}</span>
                 </p>
               </div>
             </div>
@@ -72,7 +72,7 @@
               <div class="card-body">
                 <p class="card-text fs-5">
                   Lista de Saídas / Despesas financeiras
-                  <span class="badge text-bg-secondary">{{ qtdeDespesas }}</span>
+                  <span class="badge text-bg-success">{{ qtdeDespesas }}</span>
                 </p>
               </div>
             </div>
