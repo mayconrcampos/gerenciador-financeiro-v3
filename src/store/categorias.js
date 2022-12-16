@@ -40,8 +40,7 @@ export default {
                     "Authorization": `Bearer ${categoria.token}`
                 }
             })
-            .then((res) => {
-                console.log(res.data)
+            .then(() => {
                 toast.createToaster().success(`Categoria ${categoria.categoria} cadastrada com sucesso!`, { position: "top" })
                 context.commit("setSucesso", true)
             })
@@ -89,6 +88,24 @@ export default {
             .catch((e) => {
                 console.log("ERRO", e)
             })
+        },
+        async deleteCategoria(context, payload) {
+            context.commit("setSucesso", false)
+            await axios.delete("http://127.0.0.1:5000/categoria/", {
+                params: {
+                    "id_categoria": payload.id_categoria,
+                },
+                headers: {
+                    "Authorization": `Bearer ${payload.token}`
+                }
+            })
+            .then(() => {
+                toast.createToaster().success(`Categoria excluída com sucesso!`, { position: "top" })
+                context.commit("setSucesso", true)
+            })
+            .catch((e) => {
+                console.log("ERRO", e)
+            })
         }
 
     },
@@ -102,5 +119,11 @@ export default {
         listaReceitas: (state) => {
             return state.receitas
         },
+        qtdeReceitas: (state) => {
+            return state.receitas.length
+        },
+        qtdeDespesas: (state) => {
+            return state.despesas.length
+        }
     }
 }
