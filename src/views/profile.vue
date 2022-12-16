@@ -91,17 +91,9 @@
                         <th class="text-center" scope="col">Ações</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody v-for="(receita, chave) in listaReceitas" :key="chave">
                       <tr>
-                        <th scope="row">Salário</th>
-                        <td class="text-center">
-                          <button class="btn btn-danger btn-sm">
-                            <i class="fas fa-trash-alt"></i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Prestação de Serviço</th>
+                        <th scope="row">{{ receita.categoria }}</th>
                         <td class="text-center">
                           <button class="btn btn-danger btn-sm">
                             <i class="fas fa-trash-alt"></i>
@@ -130,17 +122,9 @@
                         <th class="text-center" scope="col">Ações</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody v-for="(despesa, chave) in listaDespesas" :key="chave">
                       <tr>
-                        <th scope="row">Salário</th>
-                        <td class="text-center">
-                          <button class="btn btn-danger btn-sm">
-                            <i class="fas fa-trash-alt"></i>
-                          </button>
-                        </td>
-                      </tr>
-                      <tr>
-                        <th scope="row">Prestação de Serviço</th>
+                        <th scope="row">{{ despesa.categoria }}</th>
                         <td class="text-center">
                           <button class="btn btn-danger btn-sm">
                             <i class="fas fa-trash-alt"></i>
@@ -204,8 +188,8 @@ export default {
             this.modalListReceitas = true;
             this.carregarCategoriasReceitas(this.showUser)
           } else {
-            this.carregarCategoriasDespesas(this.showUser)
             this.modalListDespesas = true;
+            this.carregarCategoriasDespesas(this.showUser)
           }
         }
       });
@@ -218,7 +202,6 @@ export default {
     },
   },
   mounted() {
-    console.log(this.showUser)
     this.carregarCategoriasDespesas(this.showUser)
     this.carregarCategoriasReceitas(this.showUser)
   },

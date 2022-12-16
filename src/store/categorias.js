@@ -4,18 +4,25 @@ const toast = require("@meforma/vue-toaster")
 export default {
     state: {
         sucesso: false,
-        categorias: [],
+        receitas: [],
+        despesas: [],
 
     },
     mutations: {
         setSucesso(state, value) {
             state.sucesso = value
         },
-        setCategorias(state, categoria) {
-            state.categorias.push(categoria)
+        setReceitas(state, categoria) {
+            state.receitas.push(categoria)
         },
-        resetCategorias(state) {
-            state.categorias = []
+        setDespesas(state, categoria) {
+            state.despesas.push(categoria)
+        },
+        resetReceitas(state) {
+            state.receitas = []
+        },
+        resetDespesas(state) {
+            state.despesas = []
         }
 
     },
@@ -44,7 +51,7 @@ export default {
             })
         },
         async carregarCategoriasReceitas(context, user) {
-            context.commit("resetCategorias")
+            context.commit("resetReceitas")
             await axios.get(`http://127.0.0.1:5000/categoria/`, {
                 params: {
                     "tipo": "1",
@@ -55,14 +62,16 @@ export default {
                 }
             })
             .then((resp) => {
-                console.log(resp.data)
+                resp.data.entradas.forEach((element) => {
+                    context.commit("setReceitas", element)
+                })
             })
             .catch((e) => {
                 console.log("ERRO", e)
             })
         },
         async carregarCategoriasDespesas(context, user) {
-            context.commit("resetCategorias")
+            context.commit("resetDespesas")
             await axios.get(`http://127.0.0.1:5000/categoria/`, {
                 params: {
                     "tipo": "2",
@@ -73,7 +82,9 @@ export default {
                 }
             })
             .then((resp) => {
-                console.log(resp.data)
+                resp.data.entradas.forEach(element => {
+                    context.commit("setDespesas", element)
+                });
             })
             .catch((e) => {
                 console.log("ERRO", e)
@@ -86,14 +97,10 @@ export default {
             return state.sucesso
         },
         listaDespesas: (state) => {
-            state.categorias.filters((item) => {
-                return item.tipo == "2"
-            })
+            return state.despesas
         },
         listaReceitas: (state) => {
-            state.categorias.filters((item) => {
-                return item.tipo == "1"
-            })
+            return state.receitas
         },
     }
 }
