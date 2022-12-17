@@ -64,7 +64,6 @@ export default {
                 }
             })
             .then((resp) => {
-                console.log(resp.data)
                 resp.data.records.forEach(element => {
                     context.commit("setTransacaoReceitas", element)
                 });
