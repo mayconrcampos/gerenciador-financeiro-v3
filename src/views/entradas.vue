@@ -21,24 +21,10 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">Santos Supermercados</th>
-            <td>59,90</td>
-            <td>05/05/2005</td>
-          </tr>
-          <tr>
-            <th scope="row">Padaria</th>
-            <td>77,50</td>
-            <td>10/12/2022</td>
-          </tr>
-          <tr>
-            <th scope="row">Vestecasa</th>
-            <td>22,90</td>
-            <td>10/05/2005</td>
-          </tr>
-          <tr>
-            <th>Total de Entradas</th>
-            <th>R$ Muita grana</th>
+          <tr v-for="(receita) in receitas" :key="receita._id.$oid">
+            <th scope="row">{{ receita.descricao }}</th>
+            <td>{{ receita.valor }}</td>
+            <td>{{ receita.data.$date }}</td>
           </tr>
         </tbody>
       </table>
@@ -47,8 +33,31 @@
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
 export default {
   name: "entraDas",
+  data() {
+    return {
+      receitas: []
+    }
+  },
+  computed: {
+    ...mapGetters(["listaTransacoesReceitas", "showUser"]),
+  },
+
+  methods: {
+    ...mapActions(["carregarTransacoesReceitas"]),
+  },
+  watch: {
+    listaTransacoesReceitas() {
+      this.receitas = []
+      this.receitas = this.listaTransacoesReceitas
+    }
+  },
+  async mounted() {
+    await this.carregarTransacoesReceitas(this.showUser)
+
+  }
 };
 </script>
 
