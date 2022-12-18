@@ -5,12 +5,12 @@
         <i class="fas fa-sign-in-alt"></i>
         Entradas Financeiras
       </div>
-      <div id="filtrar" class="col-7 align-items-center d-flex ">
+      <div id="filtrar" class="col-7 align-items-center d-flex">
         <i class="fas fa-search fs-4 me-2"></i>
         <input type="text" class="form-control fs-5" placeholder="Filtrar" />
       </div>
     </div>
-    
+
     <div class="table-responsive mt-3">
       <table class="table table-hover shadow">
         <thead id="tablehead">
@@ -21,43 +21,49 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(receita) in receitas" :key="receita._id.$oid">
+          <tr v-for="receita in listaTransacoesReceitas" :key="receita._id.$oid">
             <th scope="row">{{ receita.descricao }}</th>
             <td>{{ receita.valor }}</td>
-            <td>{{ receita.data.$date }}</td>
+            <td>{{ formatDate(receita.data.$date) }}</td>
           </tr>
         </tbody>
       </table>
+      <div
+        class="alert alert-danger"
+        v-if="tamanhoListaTransacoesReceiras == 0"
+      >
+        Nenhum registro cadastrado
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapActions, mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 export default {
   name: "entraDas",
   data() {
-    return {
-      receitas: []
-    }
+    return {};
   },
   computed: {
-    ...mapGetters(["listaTransacoesReceitas", "showUser"]),
+    ...mapGetters([
+      "tamanhoListaTransacoesReceiras",
+      "showUser",
+      "listaTransacoesReceitas",
+    ]),
   },
 
   methods: {
-    ...mapActions(["carregarTransacoesReceitas"]),
+    formatDate(date) {
+      let ano = date.slice(0, 4);
+      let mes = date.slice(5, 7);
+      let dia = date.slice(8, 10);
+      let data = `${dia}/${mes}/${ano}`;
+      return data;
+    },
   },
-  watch: {
-    listaTransacoesReceitas() {
-      this.receitas = []
-      this.receitas = this.listaTransacoesReceitas
-    }
-  },
-  async mounted() {
-    await this.carregarTransacoesReceitas(this.showUser)
-
-  }
+  watch: {},
+  mounted() {},
 };
 </script>
 
