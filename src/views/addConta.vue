@@ -74,8 +74,12 @@
           aria-label="Categorias"
           :disabled="categorias.length == 0"
         >
-          <option v-for="(cat, key) in categorias" :key="key" :value="cat">
-            {{ cat }}
+          <option
+            v-for="cat in categorias"
+            :key="cat._id.$oid"
+            :value="cat.categoria"
+          >
+            {{ cat.categoria }}
           </option>
         </Field>
         <label for="categorias" class="inputLabels">
@@ -109,6 +113,7 @@
 
 <script>
 import { Field, Form, ErrorMessage } from "vee-validate";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   name: "addConta",
   components: {
@@ -124,62 +129,104 @@ export default {
       data: "",
       categoria: "",
       categorias: [],
-      categoriaEntrada: ["Salário", "Prestação de Serviços"],
-      categoriaSaida: ["Mercado", "Taxas", "Gasolina"],
       comentario: "",
     };
   },
   watch: {
     tipo() {
       if (this.tipo == "1") {
-        this.categorias = this.categoriaEntrada;
+        this.carregarCategoriasReceitas(this.showUser).then(() => {
+          this.categorias = this.listaReceitas;
+        });
       } else {
-        this.categorias = this.categoriaSaida;
+        this.carregarCategoriasDespesas(this.showUser).then(() => {
+          this.categorias = this.listaDespesas;
+        });
       }
     },
   },
   computed: {
+    ...mapGetters([
+      "showUser",
+      "transacaoSucesso",
+      "listaDespesas",
+      "listaReceitas",
+      "editando",
+      "transacaoEmEdicao",
+    ]),
     tipoConta() {
-      return this.tipo == "1" ? 'Entrada Financeira' : "Saída Financeira"
-    }
+      return this.tipo == "1" ? "Entrada Financeira" : "Saída Financeira";
+    },
   },
   methods: {
+    ...mapActions([
+      "addTransacao",
+      "carregarCategoriasReceitas",
+      "carregarCategoriasDespesas",
+      "carregarTransacoesReceitas",
+      "carregarTransacoesDespesas",
+    ]),
+    ...mapMutations(["setEmEdicao", "resetTransacaoEmEdicao"]),
     addConta() {
-      console.log(this.tipo, this.descricao, this.valor, this.data, this.categoria, this.comentario)
-      this.$toast.success(`${this.tipoConta} adicionada com sucesso`, { position: "top" })
-      this.limparCampos()
-      this.$router.push("/dashboard/entradas")
+      let payload = {
+        tipo: this.tipo,
+        descricao: this.descricao,
+        valor: this.valor,
+        data: this.data,
+        categoria: this.categoria,
+        comentario: this.comentario,
+        token: this.showUser.token,
+        id_user: this.showUser.id_user,
+      };
+      this.addTransacao(payload)
+        .then(() => {
+          if (this.transacaoSucesso) {
+            if (this.tipo == "1") {
+              this.carregarTransacoesReceitas(this.showUser);
+              this.$router.push("/dashboard/entradas");
+            } else {
+              this.carregarTransacoesDespesas(this.showUser);
+              this.$router.push("/dashboard/saidas");
+            }
+          }
+        })
+        .finally(() => {
+          this.limparCampos();
+        });
     },
-    limparCampos(){
-      this.tipo = "1"
-      this.descricao = ""
-      this.valor = ""
-      this.data = ""
-      this.categoria = ""
-      this.comentario = ""
+    limparCampos() {
+      this.tipo = "1";
+      this.descricao = "";
+      this.valor = "";
+      this.data = "";
+      this.categoria = "";
+      this.comentario = "";
     },
     validaDescricao(value) {
-      if(value.length > 2) {
-        return true
+      if (value.length > 2) {
+        return true;
       }
-      return "A descrição deve ter acima de 2 caracteres"
+      return "A descrição deve ter acima de 2 caracteres";
     },
     validaValor(value) {
-      let num = value.replace(",", ".")
-      if(isNaN(num) || value == "") {
-        return "Valor não numérico."
+      let num = value.replace(",", ".");
+      if (isNaN(num) || value == "") {
+        return "Valor não numérico.";
       }
-      return true
+      return true;
     },
     validaCategoria(value) {
       if (value) {
-        return true
+        return true;
       }
-      return "Selecione uma categoria"
-    }
+      return "Selecione uma categoria";
+    },
   },
   mounted() {
-    this.categorias = this.categoriaEntrada;
+    this.categorias = this.listaReceitas;
+    if(this.editando) {
+      console.log(this.transacaoEmEdicao)
+    }
   },
 };
 </script>

@@ -5,54 +5,105 @@
         <i class="fas fa-sign-in-alt"></i>
         Entradas Financeiras
       </div>
-      <div id="filtrar" class="col-7 align-items-center d-flex ">
+      <div id="filtrar" class="col-7 align-items-center d-flex">
         <i class="fas fa-search fs-4 me-2"></i>
         <input type="text" class="form-control fs-5" placeholder="Filtrar" />
       </div>
     </div>
-    
+
     <div class="table-responsive mt-3">
       <table class="table table-hover shadow">
         <thead id="tablehead">
           <tr>
             <th scope="col">Descrição</th>
-            <th scope="col">Valor (R$)</th>
+            <th class="text-start" scope="col">Valor (R$)</th>
             <th scope="col">Data</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">Santos Supermercados</th>
-            <td>59,90</td>
-            <td>05/05/2005</td>
+          <tr
+            v-for="receita in listaTransacoesReceitas"
+            :key="receita._id.$oid"
+            id="linhaTabela"
+            @click="preencheEdicao(receita)"
+          >
+            <th scope="row">{{ receita.descricao }}</th>
+            <td class="text-start">{{ valorFormatado(receita.valor) }}</td>
+            <td>{{ formatDate(receita.data.$date) }}</td>
           </tr>
-          <tr>
-            <th scope="row">Padaria</th>
-            <td>77,50</td>
-            <td>10/12/2022</td>
-          </tr>
-          <tr>
-            <th scope="row">Vestecasa</th>
-            <td>22,90</td>
-            <td>10/05/2005</td>
-          </tr>
-          <tr>
-            <th>Total de Entradas</th>
-            <th>R$ Muita grana</th>
-          </tr>
+          <td>Total (R$)</td>
+          <td class="text-start">{{ valorFormatado(valorTotalReceitas) }}</td>
         </tbody>
       </table>
+      <div
+        class="alert alert-danger"
+        v-if="tamanhoListaTransacoesReceitas == 0"
+      >
+        Nenhum registro cadastrado
+      </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   name: "entraDas",
+  data() {
+    return {};
+  },
+  computed: {
+    ...mapGetters([
+      "tamanhoListaTransacoesReceitas",
+      "showUser",
+      "listaTransacoesReceitas",
+      "valorTotalReceitas",
+      "editando",
+    ]),
+  },
+
+  methods: {
+    ...mapActions(["carregarTransacoesReceitas"]),
+    ...mapMutations([
+      "setEmEdicao",
+      "setTransacaoEmEdicao",
+      "resetTransacaoEmEdicao",
+    ]),
+    formatDate(date) {
+      let ano = date.slice(0, 4);
+      let mes = date.slice(5, 7);
+      let dia = date.slice(8, 10);
+      let data = `${dia < 10 ? `0${dia}` : dia}/${
+        mes < 10 ? `0${mes}` : mes
+      }/${ano}`;
+      return data;
+    },
+    valorFormatado(valor) {
+      let valorFormatado = valor.toLocaleString("pt-br", {
+        style: "currency",
+        currency: "BRL",
+      });
+      return valorFormatado;
+    },
+    preencheEdicao(receita) {
+      if (confirm("Deseja visualizar detalhes desta transação?")) {
+        console.log(receita);
+        this.setEmEdicao(true)
+        this.setTransacaoEmEdicao(receita)
+        this.$router.push("/dashboard/addConta")
+      }
+      
+    },
+  },
+  watch: {},
+  mounted() {},
 };
 </script>
 
 <style scoped>
+#linhaTabela {
+  cursor: pointer;
+}
 @media (max-width: 650px) {
   #search {
     display: block !important;
