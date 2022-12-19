@@ -113,7 +113,7 @@
 
 <script>
 import { Field, Form, ErrorMessage } from "vee-validate";
-import { mapActions, mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   name: "addConta",
   components: {
@@ -151,6 +151,8 @@ export default {
       "transacaoSucesso",
       "listaDespesas",
       "listaReceitas",
+      "editando",
+      "transacaoEmEdicao",
     ]),
     tipoConta() {
       return this.tipo == "1" ? "Entrada Financeira" : "Saída Financeira";
@@ -162,8 +164,9 @@ export default {
       "carregarCategoriasReceitas",
       "carregarCategoriasDespesas",
       "carregarTransacoesReceitas",
-      "carregarTransacoesDespesas"
+      "carregarTransacoesDespesas",
     ]),
+    ...mapMutations(["setEmEdicao", "resetTransacaoEmEdicao"]),
     addConta() {
       let payload = {
         tipo: this.tipo,
@@ -179,10 +182,10 @@ export default {
         .then(() => {
           if (this.transacaoSucesso) {
             if (this.tipo == "1") {
-              this.carregarTransacoesReceitas(this.showUser)
+              this.carregarTransacoesReceitas(this.showUser);
               this.$router.push("/dashboard/entradas");
             } else {
-              this.carregarTransacoesDespesas(this.showUser)
+              this.carregarTransacoesDespesas(this.showUser);
               this.$router.push("/dashboard/saidas");
             }
           }
@@ -221,6 +224,9 @@ export default {
   },
   mounted() {
     this.categorias = this.listaReceitas;
+    if(this.editando) {
+      console.log(this.transacaoEmEdicao)
+    }
   },
 };
 </script>

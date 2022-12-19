@@ -25,6 +25,7 @@
             v-for="receita in listaTransacoesReceitas"
             :key="receita._id.$oid"
             id="linhaTabela"
+            @click="preencheEdicao(receita)"
           >
             <th scope="row">{{ receita.descricao }}</th>
             <td class="text-start">{{ valorFormatado(receita.valor) }}</td>
@@ -36,7 +37,7 @@
       </table>
       <div
         class="alert alert-danger"
-        v-if="tamanhoListaTransacoesReceiras == 0"
+        v-if="tamanhoListaTransacoesReceitas == 0"
       >
         Nenhum registro cadastrado
       </div>
@@ -45,23 +46,29 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
+import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   name: "entraDas",
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     ...mapGetters([
-      "tamanhoListaTransacoesReceiras",
+      "tamanhoListaTransacoesReceitas",
       "showUser",
       "listaTransacoesReceitas",
       "valorTotalReceitas",
+      "editando",
     ]),
   },
 
   methods: {
+    ...mapActions(["carregarTransacoesReceitas"]),
+    ...mapMutations([
+      "setEmEdicao",
+      "setTransacaoEmEdicao",
+      "resetTransacaoEmEdicao",
+    ]),
     formatDate(date) {
       let ano = date.slice(0, 4);
       let mes = date.slice(5, 7);
@@ -77,6 +84,15 @@ export default {
         currency: "BRL",
       });
       return valorFormatado;
+    },
+    preencheEdicao(receita) {
+      if (confirm("Deseja visualizar detalhes desta transação?")) {
+        console.log(receita);
+        this.setEmEdicao(true)
+        this.setTransacaoEmEdicao(receita)
+        this.$router.push("/dashboard/addConta")
+      }
+      
     },
   },
   watch: {},

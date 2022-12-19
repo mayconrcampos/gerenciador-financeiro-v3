@@ -7,6 +7,8 @@ export default {
         transacaoReceitas: [],
         transacaoDespesas: [],
         transacaoSucesso: false,
+        emEdicao: false,
+        transacaoEmEdicao: {},
     },
     mutations: {
         setTransacaoSucesso(state, value) {
@@ -26,6 +28,15 @@ export default {
         },
         resetTransacaoDespesas(state) {
             state.transacaoDespesas = []
+        },
+        setTransacaoEmEdicao(state, transacao) {
+            state.transacaoEmEdicao = transacao
+        },
+        resetTransacaoEmEdicao(state) {
+            state.transacaoEmEdicao = {}
+        },
+        setEmEdicao(state, value) {
+            state.emEdicao = value
         }
     },
     actions: {
@@ -104,7 +115,7 @@ export default {
         listaTransacoesDespesas: (state) => {
             return state.transacaoDespesas
         },
-        tamanhoListaTransacoesReceiras: (state) => {
+        tamanhoListaTransacoesReceitas: (state) => {
             return state.transacaoReceitas.length
         },
         tamanhoListaTransacoesDespesas: (state) => {
@@ -116,6 +127,12 @@ export default {
                 total = total + Number(rec.valor)
             })
             return total
+        },
+        editando: (state) => {
+            return state.emEdicao
+        },
+        transacaoEmEdicao: (state) => {
+            return state.transacaoEmEdicao
         }
     }
 }

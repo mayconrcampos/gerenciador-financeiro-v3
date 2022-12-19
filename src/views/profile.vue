@@ -188,7 +188,7 @@ export default {
       "listaDespesas",
       "qtdeReceitas",
       "qtdeDespesas",
-      "tamanhoListaTransacoesReceiras",
+      "tamanhoListaTransacoesReceitas",
     ]),
     tipoCategoria() {
       return this.tipo == "1" ? "Entrada / Receita" : "Saída / Despesa";
@@ -261,7 +261,7 @@ export default {
     if (!this.qtdeReceitas) {
       this.carregarCategoriasReceitas(this.showUser);
     }
-    if (this.tamanhoListaTransacoesReceiras == 0) {
+    if (this.tamanhoListaTransacoesReceitas == 0) {
       this.carregarTransacoesReceitas(this.showUser)
     }
   },
