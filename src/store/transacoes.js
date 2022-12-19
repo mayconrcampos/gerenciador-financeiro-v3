@@ -109,6 +109,13 @@ export default {
         },
         tamanhoListaTransacoesDespesas: (state) => {
             return state.transacaoDespesas.length
+        },
+        valorTotalReceitas: (state) => {
+            let total = 0
+            state.transacaoReceitas.forEach((rec) => {
+                total = total + Number(rec.valor)
+            })
+            return total
         }
     }
 }
