@@ -16,16 +16,22 @@
         <thead id="tablehead">
           <tr>
             <th scope="col">Descrição</th>
-            <th scope="col">Valor (R$)</th>
+            <th class="text-start" scope="col">Valor (R$)</th>
             <th scope="col">Data</th>
           </tr>
         </thead>
         <tbody>
-          <tr v-for="receita in listaTransacoesReceitas" :key="receita._id.$oid">
+          <tr
+            v-for="receita in listaTransacoesReceitas"
+            :key="receita._id.$oid"
+            id="linhaTabela"
+          >
             <th scope="row">{{ receita.descricao }}</th>
-            <td>{{ receita.valor }}</td>
+            <td class="text-start">{{ valorFormatado(receita.valor) }}</td>
             <td>{{ formatDate(receita.data.$date) }}</td>
           </tr>
+          <td>Total (R$)</td>
+          <td class="text-start">{{ valorFormatado(valorTotalReceitas) }}</td>
         </tbody>
       </table>
       <div
@@ -43,13 +49,15 @@ import { mapGetters } from "vuex";
 export default {
   name: "entraDas",
   data() {
-    return {};
+    return {
+    };
   },
   computed: {
     ...mapGetters([
       "tamanhoListaTransacoesReceiras",
       "showUser",
       "listaTransacoesReceitas",
+      "valorTotalReceitas",
     ]),
   },
 
@@ -58,8 +66,17 @@ export default {
       let ano = date.slice(0, 4);
       let mes = date.slice(5, 7);
       let dia = date.slice(8, 10);
-      let data = `${dia}/${mes}/${ano}`;
+      let data = `${dia < 10 ? `0${dia}` : dia}/${
+        mes < 10 ? `0${mes}` : mes
+      }/${ano}`;
       return data;
+    },
+    valorFormatado(valor) {
+      let valorFormatado = valor.toLocaleString("pt-br", {
+        style: "currency",
+        currency: "BRL",
+      });
+      return valorFormatado;
     },
   },
   watch: {},
@@ -68,6 +85,9 @@ export default {
 </script>
 
 <style scoped>
+#linhaTabela {
+  cursor: pointer;
+}
 @media (max-width: 650px) {
   #search {
     display: block !important;
