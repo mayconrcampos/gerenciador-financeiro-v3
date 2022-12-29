@@ -1,5 +1,8 @@
 <template>
   <div class="container-lg bg-white rounded-4 shadow mt-5 p-5">
+    <div class="container">
+      GOOGLE ADS ESPAÇO RESERVADO
+    </div>
     <nav class="navbar navbar-expand-md bg-white">
       <div class="container-fluid">
         <a class="navbar-brand pe-3">
@@ -57,8 +60,8 @@
       </div>
     </nav>
     <hr />
-    <div class="text-center ms-3">
-      <small class="badge bg-white text-dark">Usuário: {{ emailUser }}</small>
+    <div class="text-start me-4">
+      <small class="badge bg-white text-dark"><i class="fas fa-user"></i> {{ emailUser }}</small>
     </div>
     <div class="row mt-5">
       <router-view></router-view>
@@ -66,6 +69,9 @@
     <footer class="footer mt-auto">
       <footerPage />
     </footer>
+    <div class="container">
+      GOOGLE ADS ESPAÇO RESERVADO
+    </div>
   </div>
 </template>
 
