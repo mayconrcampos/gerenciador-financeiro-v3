@@ -104,7 +104,10 @@
       </div>
       <div class="d-grid">
         <button class="btn btn-lg" id="submitButton" type="submit">
-          Cadastrar
+          {{ editando ? "Editar" : "Cadastrar" }}
+        </button>
+        <button @click="limpar()" class="btn btn-lg btn-white shadow fs-5 mt-2">
+          Limpar
         </button>
       </div>
     </Form>
@@ -165,34 +168,69 @@ export default {
       "carregarCategoriasDespesas",
       "carregarTransacoesReceitas",
       "carregarTransacoesDespesas",
+      "editaTransacao",
     ]),
     ...mapMutations(["setEmEdicao", "resetTransacaoEmEdicao"]),
     addConta() {
-      let payload = {
-        tipo: this.tipo,
-        descricao: this.descricao,
-        valor: this.valor,
-        data: this.data,
-        categoria: this.categoria,
-        comentario: this.comentario,
-        token: this.showUser.token,
-        id_user: this.showUser.id_user,
-      };
-      this.addTransacao(payload)
-        .then(() => {
+      if (this.editando) {
+        // Edita transação
+        let payload = {
+          tipo: this.tipo,
+          descricao: this.descricao,
+          valor: this.valor,
+          data: this.data,
+          categoria: this.categoria,
+          comentario: this.comentario,
+          token: this.showUser.token,
+          id_user: this.showUser.id_user,
+          _id: this.transacaoEmEdicao._id.$oid,
+        };
+
+        this.editaTransacao(payload).then(() => {
           if (this.transacaoSucesso) {
             if (this.tipo == "1") {
-              this.carregarTransacoesReceitas(this.showUser);
-              this.$router.push("/dashboard/entradas");
+              this.carregarTransacoesReceitas(this.showUser).then(() => {
+                this.$router.push("/dashboard/entradas")
+              })
+              
             } else {
-              this.carregarTransacoesDespesas(this.showUser);
-              this.$router.push("/dashboard/saidas");
+              this.carregarTransacoesDespesas(this.showUser).then(() => {
+                this.$router.push("/dashboard/saidas")
+              })
             }
           }
         })
         .finally(() => {
-          this.limparCampos();
-        });
+          this.limparCampos()
+        })
+      } else {
+        // Adiciona transação nova
+        let payload = {
+          tipo: this.tipo,
+          descricao: this.descricao,
+          valor: this.valor,
+          data: this.data,
+          categoria: this.categoria,
+          comentario: this.comentario,
+          token: this.showUser.token,
+          id_user: this.showUser.id_user,
+        };
+        this.addTransacao(payload)
+          .then(() => {
+            if (this.transacaoSucesso) {
+              if (this.tipo == "1") {
+                this.carregarTransacoesReceitas(this.showUser);
+                this.$router.push("/dashboard/entradas");
+              } else {
+                this.carregarTransacoesDespesas(this.showUser);
+                this.$router.push("/dashboard/saidas");
+              }
+            }
+          })
+          .finally(() => {
+            this.limparCampos();
+          });
+      }
     },
     limparCampos() {
       this.tipo = "1";
@@ -202,6 +240,27 @@ export default {
       this.categoria = "";
       this.comentario = "";
     },
+    limpar() {
+      this.limparCampos();
+      this.setEmEdicao(false);
+      this.resetTransacaoEmEdicao();
+    },
+    formatDateToFieldDate(date) {
+      let ano = date.$date.slice(0, 4);
+      let mes = date.$date.slice(5, 7);
+      let dia = date.$date.slice(8, 10);
+      let data = `${ano}-${mes}-${dia}`;
+      return data;
+    },
+    preencheCamposEdicao() {
+      this.formatDateToFieldDate(this.transacaoEmEdicao.data);
+      this.tipo = this.transacaoEmEdicao.tipo;
+      this.descricao = this.transacaoEmEdicao.descricao;
+      this.valor = this.transacaoEmEdicao.valor;
+      this.data = this.formatDateToFieldDate(this.transacaoEmEdicao.data);
+      this.categoria = this.transacaoEmEdicao.categoria;
+      this.comentario = this.transacaoEmEdicao.comentario;
+    },
     validaDescricao(value) {
       if (value.length > 2) {
         return true;
@@ -209,7 +268,10 @@ export default {
       return "A descrição deve ter acima de 2 caracteres";
     },
     validaValor(value) {
-      let num = value.replace(",", ".");
+      let num = "";
+      if (!this.editando) {
+        num = value.replace(",", ".");
+      }
       if (isNaN(num) || value == "") {
         return "Valor não numérico.";
       }
@@ -224,8 +286,8 @@ export default {
   },
   mounted() {
     this.categorias = this.listaReceitas;
-    if(this.editando) {
-      console.log(this.transacaoEmEdicao)
+    if (this.editando) {
+      this.preencheCamposEdicao();
     }
   },
 };

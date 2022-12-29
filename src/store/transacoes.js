@@ -63,6 +63,32 @@ export default {
                 console.error("ERRO", e)
             })
         },
+        async editaTransacao(context, payload) {
+            context.commit("setTransacaoSucesso", false)
+
+            let params = {
+                "tipo": payload.tipo,
+                "descricao": payload.descricao,
+                "valor": payload.valor,
+                "data": payload.data,
+                "categoria": payload.categoria,
+                "comentario": payload.comentario,
+                "id_user": payload.id_user,
+                "_id": payload._id,
+                "token": payload.token,
+            }
+            await axios.put("http://127.0.0.1:5000/transacao/", params, {
+                headers: {
+                    "Authorization": `Bearer ${payload.token}`,
+                    'Access-Control-Allow-Origin': "*",
+                }
+            }).then(() => {
+                toast.createToaster().success(`Transação Atualizada com sucesso!`, { position: "top" })
+                context.commit("setTransacaoSucesso", true)
+            }).catch((e) => {
+                console.error("ERRO", e)
+            })
+        },
         async carregarTransacoesReceitas(context, payload) {
             context.commit("resetTransacaoReceitas")
             await axios.get("http://127.0.0.1:5000/transacao/tipo", {

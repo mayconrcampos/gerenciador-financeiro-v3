@@ -86,8 +86,7 @@ export default {
       return valorFormatado;
     },
     preencheEdicao(receita) {
-      if (confirm("Deseja visualizar detalhes desta transação?")) {
-        console.log(receita);
+      if (confirm("Deseja visualizar/editar detalhes desta transação?")) {
         this.setEmEdicao(true)
         this.setTransacaoEmEdicao(receita)
         this.$router.push("/dashboard/addConta")

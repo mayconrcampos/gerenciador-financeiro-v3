@@ -4,19 +4,11 @@ const toast = require("@meforma/vue-toaster")
 export default {
     state: {
         user: {},
-        logged: {
-            token: "",
-            email: "",
-            user_id: ""
-        },
         sucesso: false,
         msgResponse: "",
 
     },
     mutations: {
-        setLogged(state, value) {
-            state.logged = value
-        },
         setSucesso(state, status) {
             state.sucesso = status
         },
@@ -58,6 +50,7 @@ export default {
                     "email": resp.data.email,
                     "id_user": resp.data.user_id,
                     "token": resp.data.token,
+                    "exp": resp.data.exp,
                     "logged": true,
                 })
                 // Gravar User na localStorage
