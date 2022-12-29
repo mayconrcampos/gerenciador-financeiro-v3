@@ -26,13 +26,16 @@
             :key="receita._id.$oid"
             id="linhaTabela"
             @click="preencheEdicao(receita)"
+            :class="contaVencida(receita.data.$date)"
           >
             <th scope="row">{{ receita.descricao }}</th>
             <td class="text-start">{{ valorFormatado(receita.valor) }}</td>
             <td>{{ formatDate(receita.data.$date) }}</td>
           </tr>
-          <td>Total (R$)</td>
-          <td class="text-start">{{ valorFormatado(valorTotalReceitas) }}</td>
+          <td class="alert alert-light">Total em conta (R$)</td>
+          <td class="alert alert-light text-start">
+            {{ valorFormatado(valorTotalReceitas) }}
+          </td>
         </tbody>
       </table>
       <div
@@ -40,6 +43,11 @@
         v-if="tamanhoListaTransacoesReceitas == 0"
       >
         Nenhum registro cadastrado
+      </div>
+      <div class="row w-100 m-auto">
+        <div class="col-md-4 alert alert-success">Ja foi lançado</div>
+        <div class="col-md-4 alert alert-secondary">Será lançado hoje</div>
+        <div class="col-md-4 alert alert-danger">Ainda não foi lançado</div>
       </div>
     </div>
   </div>
@@ -78,6 +86,31 @@ export default {
       }/${ano}`;
       return data;
     },
+    contaVencida(date) {
+      let hoje = new Date();
+      let vencimento = new Date(date);
+      hoje = hoje.toISOString();
+      vencimento = vencimento.toISOString();
+
+      let hoje_ano = hoje.slice(0, 4);
+      let hoje_mes = hoje.slice(5, 7);
+      let hoje_dia = hoje.slice(8, 10);
+
+      let vencto_ano = vencimento.slice(0, 4);
+      let vencto_mes = vencimento.slice(5, 7);
+      let vencto_dia = vencimento.slice(8, 10);
+
+      let dia_hoje = `${hoje_ano}-${hoje_mes}-${hoje_dia}`;
+      let dia_vencimento = `${vencto_ano}-${vencto_mes}-${vencto_dia}`;
+
+      if (new Date(dia_hoje) < new Date(dia_vencimento)) {
+        return "alert alert-danger";
+      } else if (dia_hoje == dia_vencimento) {
+        return "alert alert-secondary";
+      } else {
+        return "alert alert-success";
+      }
+    },
     valorFormatado(valor) {
       let valorFormatado = valor.toLocaleString("pt-br", {
         style: "currency",
@@ -87,11 +120,10 @@ export default {
     },
     preencheEdicao(receita) {
       if (confirm("Deseja visualizar/editar detalhes desta transação?")) {
-        this.setEmEdicao(true)
-        this.setTransacaoEmEdicao(receita)
-        this.$router.push("/dashboard/addConta")
+        this.setEmEdicao(true);
+        this.setTransacaoEmEdicao(receita);
+        this.$router.push("/dashboard/addConta");
       }
-      
     },
   },
   watch: {},
