@@ -261,8 +261,8 @@ export default {
     if (!this.qtdeReceitas) {
       this.carregarCategoriasReceitas(this.showUser);
     }
-    if (this.tamanhoListaTransacoesReceitas == 0) {
-      this.carregarTransacoesReceitas(this.showUser)
+    if (!this.tamanhoListaTransacoesReceitas) {
+      this.carregarTransacoesReceitas(this.showUser);
     }
   },
 };

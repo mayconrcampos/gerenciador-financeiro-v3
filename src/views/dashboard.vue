@@ -104,6 +104,7 @@ export default {
       "email": JSON.parse(localStorage.getItem("user_logado")).email,
       "token": JSON.parse(localStorage.getItem("user_logado")).token,
       "id_user": JSON.parse(localStorage.getItem("user_logado")).id_user,
+      "exp": JSON.parse(localStorage.getItem("user_logado")).exp,
       "logged": true,
     })
   },
