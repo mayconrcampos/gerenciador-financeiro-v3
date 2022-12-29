@@ -8,7 +8,11 @@
         <button
           class="navbar-toggler"
           type="button"
-          :style="`${navBarShow ? 'background:#42b983;color:white;': 'background:#42b983;color:#black'}`"
+          :style="`${
+            navBarShow
+              ? 'background:#42b983;color:white;'
+              : 'background:#42b983;color:#black'
+          }`"
           @click="collapseNavBar()"
           data-bs-toggle="collapse"
           data-bs-target="#navbar"
@@ -20,7 +24,7 @@
         </button>
         <Transition>
           <div
-            v-if="(navBarShow || windowWidth > 768)"
+            v-if="navBarShow || windowWidth > 768"
             class="navbar-collapse"
             id=""
           >
@@ -29,7 +33,7 @@
                 windowWidth > 770 ? 'flex-row' : 'flex-column'
               }`"
             >
-            <router-link class="nav-link fs-5 me-2" to="/dashboard/addConta"
+              <router-link class="nav-link fs-5 me-2" to="/dashboard/addConta"
                 ><i class="fas fa-plus"></i> Add Transação</router-link
               >
               <router-link class="nav-link fs-5 me-2" to="/dashboard/entradas"
@@ -67,7 +71,7 @@
 
 <script>
 import footerPage from "@/components/footerPage.vue";
-import { mapActions, mapGetters, mapMutations } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   name: "dashBoard",
   components: {
@@ -80,15 +84,15 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["emailUser"]),
+    ...mapGetters(["emailUser", "showUser"]),
   },
   methods: {
     ...mapMutations(["setUser"]),
     ...mapActions(["logoutUser"]),
     sair() {
       this.logoutUser().then(() => {
-        this.$router.push("/")
-      })
+        this.$router.push("/");
+      });
     },
     collapseNavBar() {
       this.navBarShow = !this.navBarShow;
@@ -100,13 +104,15 @@ export default {
   created() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
-    this.setUser({
-      "email": JSON.parse(localStorage.getItem("user_logado")).email,
-      "token": JSON.parse(localStorage.getItem("user_logado")).token,
-      "id_user": JSON.parse(localStorage.getItem("user_logado")).id_user,
-      "exp": JSON.parse(localStorage.getItem("user_logado")).exp,
-      "logged": true,
-    })
+    if (localStorage.getItem("user_logado") && !this.showUser) {
+      this.setUser({
+        email: JSON.parse(localStorage.getItem("user_logado")).email,
+        token: JSON.parse(localStorage.getItem("user_logado")).token,
+        id_user: JSON.parse(localStorage.getItem("user_logado")).id_user,
+        exp: JSON.parse(localStorage.getItem("user_logado")).exp,
+        logged: true,
+      });
+    }
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);
