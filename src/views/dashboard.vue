@@ -1,5 +1,6 @@
 <template>
   <div class="container-lg bg-white rounded-4 shadow mt-5 p-5">
+    <div class="container">GOOGLE ADS ESPAÇO RESERVADO</div>
     <nav class="navbar navbar-expand-md bg-white">
       <div class="container-fluid">
         <a class="navbar-brand pe-3">
@@ -8,7 +9,11 @@
         <button
           class="navbar-toggler"
           type="button"
-          :style="`${navBarShow ? 'background:#42b983;color:white;': 'background:#42b983;color:#black'}`"
+          :style="`${
+            navBarShow
+              ? 'background:#42b983;color:white;'
+              : 'background:#42b983;color:#black'
+          }`"
           @click="collapseNavBar()"
           data-bs-toggle="collapse"
           data-bs-target="#navbar"
@@ -20,7 +25,7 @@
         </button>
         <Transition>
           <div
-            v-if="(navBarShow || windowWidth > 768)"
+            v-if="navBarShow || windowWidth > 768"
             class="navbar-collapse"
             id=""
           >
@@ -29,7 +34,7 @@
                 windowWidth > 770 ? 'flex-row' : 'flex-column'
               }`"
             >
-            <router-link class="nav-link fs-5 me-2" to="/dashboard/addConta"
+              <router-link class="nav-link fs-5 me-2" to="/dashboard/addConta"
                 ><i class="fas fa-plus"></i> Add Transação</router-link
               >
               <router-link class="nav-link fs-5 me-2" to="/dashboard/entradas"
@@ -53,8 +58,10 @@
       </div>
     </nav>
     <hr />
-    <div class="text-center ms-3">
-      <small class="badge bg-white text-dark">Usuário: {{ emailUser }}</small>
+    <div class="text-start me-4">
+      <small class="badge bg-white text-dark"
+        ><i class="fas fa-user"></i> {{ emailUser }}</small
+      >
     </div>
     <div class="row mt-5">
       <router-view></router-view>
@@ -62,12 +69,13 @@
     <footer class="footer mt-auto">
       <footerPage />
     </footer>
+    <div class="container">GOOGLE ADS ESPAÇO RESERVADO</div>
   </div>
 </template>
 
 <script>
 import footerPage from "@/components/footerPage.vue";
-import { mapActions, mapGetters, mapMutations } from 'vuex';
+import { mapActions, mapGetters, mapMutations } from "vuex";
 export default {
   name: "dashBoard",
   components: {
@@ -80,15 +88,26 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["emailUser"]),
+    ...mapGetters([
+      "emailUser",
+      "showUser",
+      "qtdeReceitas",
+      "qtdeDespesas",
+      "tamanhoListaTransacoesReceitas",
+    ]),
   },
   methods: {
     ...mapMutations(["setUser"]),
-    ...mapActions(["logoutUser"]),
+    ...mapActions([
+      "logoutUser",
+      "carregarCategoriasReceitas",
+      "carregarCategoriasDespesas",
+      "carregarTransacoesReceitas",
+    ]),
     sair() {
       this.logoutUser().then(() => {
-        this.$router.push("/")
-      })
+        this.$router.push("/");
+      });
     },
     collapseNavBar() {
       this.navBarShow = !this.navBarShow;
@@ -97,16 +116,41 @@ export default {
       this.windowWidth = window.innerWidth;
     },
   },
-  created() {
+  beforeMount() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
-    this.setUser({
-      "email": JSON.parse(localStorage.getItem("user_logado")).email,
-      "token": JSON.parse(localStorage.getItem("user_logado")).token,
-      "id_user": JSON.parse(localStorage.getItem("user_logado")).id_user,
-      "exp": JSON.parse(localStorage.getItem("user_logado")).exp,
-      "logged": true,
-    })
+  },
+  mounted() {
+    // Testa se store user está preenchida, se sim, ele preenche as tabelas de categorias e transações
+    if (this.showUser.length > 0) {
+      if (!this.qtdeDespesas) {
+        this.carregarCategoriasDespesas(this.showUser);
+      }
+      if (!this.qtdeReceitas) {
+        this.carregarCategoriasReceitas(this.showUser);
+      }
+      if (!this.tamanhoListaTransacoesReceitas) {
+        this.carregarTransacoesReceitas(this.showUser);
+      }
+    // Senão ele setá user, via localStorage e preenche as tabelas de categorias e transações
+    } else {
+      this.setUser({
+        email: JSON.parse(localStorage.getItem("user_logado")).email,
+        token: JSON.parse(localStorage.getItem("user_logado")).token,
+        id_user: JSON.parse(localStorage.getItem("user_logado")).id_user,
+        exp: JSON.parse(localStorage.getItem("user_logado")).exp,
+        logged: true,
+      });
+      if (!this.qtdeDespesas) {
+        this.carregarCategoriasDespesas(this.showUser);
+      }
+      if (!this.qtdeReceitas) {
+        this.carregarCategoriasReceitas(this.showUser);
+      }
+      if (!this.tamanhoListaTransacoesReceitas) {
+        this.carregarTransacoesReceitas(this.showUser);
+      }
+    }
   },
   destroyed() {
     window.removeEventListener("resize", this.handleResize);

@@ -15,8 +15,11 @@ export default {
         setMsgResponse(state, msg) {
             state.msgResponse = msg
         },
-        setUser(state, user) {
+        setUser(state, {...user}) {
             state.user = user
+        },
+        resetUser(state) {
+            state.user = {}
         }
 
     },
@@ -41,7 +44,7 @@ export default {
             })
         },
         async loginUser(context, user) {
-            context.commit("setUser", {})
+            context.commit("resetUser")
             context.commit("setSucesso", false)
             await axios.post("http://127.0.0.1:5000/users/login", user)
             .then((resp) => {
@@ -63,9 +66,9 @@ export default {
                 toast.createToaster().error(`${err.response.data.error} - ${err.response.status} ${err.response.statusText}`, { position: "top" })
             })
         },
-        async logoutUser(context) {
+        logoutUser(context) {
             toast.createToaster().success(`Usuário deslogado com sucesso!`, { position: "top" })
-            context.commit("setUser", {})    
+            context.commit("resetUser")    
             localStorage.removeItem("user_logado")
         } 
 
