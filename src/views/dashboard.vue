@@ -1,8 +1,6 @@
 <template>
   <div class="container-lg bg-white rounded-4 shadow mt-5 p-5">
-    <div class="container">
-      GOOGLE ADS ESPAÇO RESERVADO
-    </div>
+    <div class="container">GOOGLE ADS ESPAÇO RESERVADO</div>
     <nav class="navbar navbar-expand-md bg-white">
       <div class="container-fluid">
         <a class="navbar-brand pe-3">
@@ -61,7 +59,9 @@
     </nav>
     <hr />
     <div class="text-start me-4">
-      <small class="badge bg-white text-dark"><i class="fas fa-user"></i> {{ emailUser }}</small>
+      <small class="badge bg-white text-dark"
+        ><i class="fas fa-user"></i> {{ emailUser }}</small
+      >
     </div>
     <div class="row mt-5">
       <router-view></router-view>
@@ -69,9 +69,7 @@
     <footer class="footer mt-auto">
       <footerPage />
     </footer>
-    <div class="container">
-      GOOGLE ADS ESPAÇO RESERVADO
-    </div>
+    <div class="container">GOOGLE ADS ESPAÇO RESERVADO</div>
   </div>
 </template>
 
@@ -90,11 +88,22 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["emailUser", "showUser"]),
+    ...mapGetters([
+      "emailUser",
+      "showUser",
+      "qtdeReceitas",
+      "qtdeDespesas",
+      "tamanhoListaTransacoesReceitas",
+    ]),
   },
   methods: {
     ...mapMutations(["setUser"]),
-    ...mapActions(["logoutUser"]),
+    ...mapActions([
+      "logoutUser",
+      "carregarCategoriasReceitas",
+      "carregarCategoriasDespesas",
+      "carregarTransacoesReceitas",
+    ]),
     sair() {
       this.logoutUser().then(() => {
         this.$router.push("/");
@@ -107,10 +116,24 @@ export default {
       this.windowWidth = window.innerWidth;
     },
   },
-  created() {
+  beforeMount() {
     window.addEventListener("resize", this.handleResize);
     this.handleResize();
-    if (localStorage.getItem("user_logado") && !this.showUser) {
+  },
+  mounted() {
+    // Testa se store user está preenchida, se sim, ele preenche as tabelas de categorias e transações
+    if (this.showUser.length > 0) {
+      if (!this.qtdeDespesas) {
+        this.carregarCategoriasDespesas(this.showUser);
+      }
+      if (!this.qtdeReceitas) {
+        this.carregarCategoriasReceitas(this.showUser);
+      }
+      if (!this.tamanhoListaTransacoesReceitas) {
+        this.carregarTransacoesReceitas(this.showUser);
+      }
+    // Senão ele setá user, via localStorage e preenche as tabelas de categorias e transações
+    } else {
       this.setUser({
         email: JSON.parse(localStorage.getItem("user_logado")).email,
         token: JSON.parse(localStorage.getItem("user_logado")).token,
@@ -118,6 +141,15 @@ export default {
         exp: JSON.parse(localStorage.getItem("user_logado")).exp,
         logged: true,
       });
+      if (!this.qtdeDespesas) {
+        this.carregarCategoriasDespesas(this.showUser);
+      }
+      if (!this.qtdeReceitas) {
+        this.carregarCategoriasReceitas(this.showUser);
+      }
+      if (!this.tamanhoListaTransacoesReceitas) {
+        this.carregarTransacoesReceitas(this.showUser);
+      }
     }
   },
   destroyed() {

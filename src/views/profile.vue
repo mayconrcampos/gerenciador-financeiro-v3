@@ -200,7 +200,6 @@ export default {
       "carregarCategoriasReceitas",
       "carregarCategoriasDespesas",
       "deleteCategoria",
-      "carregarTransacoesReceitas",
     ]),
     addCategoria() {
       let payload = {
@@ -254,17 +253,7 @@ export default {
       this.categoria = "";
     },
   },
-  mounted() {
-    if (!this.qtdeDespesas) {
-      this.carregarCategoriasDespesas(this.showUser);
-    }
-    if (!this.qtdeReceitas) {
-      this.carregarCategoriasReceitas(this.showUser);
-    }
-    if (!this.tamanhoListaTransacoesReceitas) {
-      this.carregarTransacoesReceitas(this.showUser);
-    }
-  },
+  
 };
 </script>
 

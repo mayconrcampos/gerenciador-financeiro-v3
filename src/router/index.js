@@ -82,6 +82,7 @@ router.beforeEach((to, from, next) => {
 // Recebendo usuário logado via Google Auth
 router.beforeEach((to, from, next) => {
   if (to.params.token) {
+    store.mutations.resetUser(store.state.user);
     let decoded = jwt_decode(to.params.token);
     let user = {
       email: decoded.email,
@@ -90,8 +91,6 @@ router.beforeEach((to, from, next) => {
       exp: decoded.exp,
       logged: true,
     };
-    store.mutations.setUser(store.state.user, user);
-
     localStorage.setItem("user_logado", JSON.stringify(user));
 
     toast
