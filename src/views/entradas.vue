@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div class="table-responsive mt-3">
+    <div class="table-responsive mt-3 rounded">
       <table class="table table-hover shadow">
         <thead id="tablehead">
           <tr>
@@ -32,29 +32,54 @@
             <td class="text-start">{{ valorFormatado(receita.valor) }}</td>
             <td>{{ formatDate(receita.data.$date) }}</td>
           </tr>
-          <td class="alert alert-light">Total em conta (R$)</td>
-          <td class="alert alert-light text-start">
-            {{ valorFormatado(valorTotalReceitas) }}
-          </td>
+          <div
+            class="alert alert-danger"
+            v-if="tamanhoListaTransacoesReceitas == 0"
+          >
+            Nenhum registro cadastrado
+          </div>
+          <div class="alert d-flex">
+            <div class="col-md alert alert-success">
+              Valor lançado
+              {{
+                valorFormatado(
+                  valorTotalReceitasLancadas(listaTransacoesReceitas)
+                )
+              }}
+            </div>
+            <div></div>
+            <div class="col-md alert alert-secondary">Será lançado hoje
+              {{
+                valorFormatado(
+                  valorTotalReceitasVenceHoje(listaTransacoesReceitas)
+                )
+              }}
+            </div>
+            <div></div>
+            <div class="col-md alert alert-danger">Valor não lançado
+              {{
+                valorFormatado(
+                  valorTotalReceitasNaoLancadas(listaTransacoesReceitas)
+                )
+              }}
+            </div>
+          </div>
         </tbody>
       </table>
-      <div
-        class="alert alert-danger"
-        v-if="tamanhoListaTransacoesReceitas == 0"
-      >
-        Nenhum registro cadastrado
-      </div>
-      <div class="row w-100 m-auto">
-        <div class="col-md-4 alert alert-success">Ja foi lançado</div>
-        <div class="col-md-4 alert alert-secondary">Será lançado hoje</div>
-        <div class="col-md-4 alert alert-danger">Ainda não foi lançado</div>
-      </div>
     </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapGetters, mapMutations } from "vuex";
+import {
+  valorFormatado,
+  formatDate,
+  contaVencida,
+  valorTotalReceitasLancadas,
+  valorTotalReceitasVenceHoje,
+  valorTotalReceitasNaoLancadas,
+} from "@/services/utils";
 export default {
   name: "entraDas",
   data() {
@@ -77,47 +102,12 @@ export default {
       "setTransacaoEmEdicao",
       "resetTransacaoEmEdicao",
     ]),
-    formatDate(date) {
-      let ano = date.slice(0, 4);
-      let mes = date.slice(5, 7);
-      let dia = date.slice(8, 10);
-      let data = `${dia < 10 ? `0${dia}` : dia}/${
-        mes < 10 ? `0${mes}` : mes
-      }/${ano}`;
-      return data;
-    },
-    contaVencida(date) {
-      let hoje = new Date();
-      let vencimento = new Date(date);
-      hoje = hoje.toISOString();
-      vencimento = vencimento.toISOString();
-
-      let hoje_ano = hoje.slice(0, 4);
-      let hoje_mes = hoje.slice(5, 7);
-      let hoje_dia = hoje.slice(8, 10);
-
-      let vencto_ano = vencimento.slice(0, 4);
-      let vencto_mes = vencimento.slice(5, 7);
-      let vencto_dia = vencimento.slice(8, 10);
-
-      let dia_hoje = `${hoje_ano}-${hoje_mes}-${hoje_dia}`;
-      let dia_vencimento = `${vencto_ano}-${vencto_mes}-${vencto_dia}`;
-
-      if (new Date(dia_hoje) < new Date(dia_vencimento)) {
-        return "alert alert-danger";
-      } else if (dia_hoje == dia_vencimento) {
-        return "alert alert-secondary";
-      } else {
-        return "alert alert-success";
-      }
-    },
-    valorFormatado(valor) {
-      let valorFormatado = valor.toLocaleString("pt-br", {
-        style: "currency",
-        currency: "BRL",
-      });
-      return valorFormatado;
-    },
+    valorFormatado,
+    formatDate,
+    contaVencida,
+    valorTotalReceitasLancadas,
+    valorTotalReceitasVenceHoje,
+    valorTotalReceitasNaoLancadas,
     preencheEdicao(receita) {
       if (confirm("Deseja visualizar/editar detalhes desta transação?")) {
         this.setEmEdicao(true);
