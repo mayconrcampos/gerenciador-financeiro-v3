@@ -11,7 +11,7 @@
       </div>
     </div>
 
-    <div class="table-responsive mt-3">
+    <div class="table-responsive mt-3 rounded">
       <table class="table table-hover shadow">
         <thead id="tablehead">
           <tr>
@@ -38,8 +38,8 @@
           >
             Nenhum registro cadastrado
           </div>
-          <div class="alert d-flex ">
-            <div class="col-md-4 alert alert-success">
+          <div class="alert d-flex">
+            <div class="col-md alert alert-success">
               Valor lançado
               {{
                 valorFormatado(
@@ -47,14 +47,16 @@
                 )
               }}
             </div>
-            <div class="col-md-4 alert alert-secondary">Será lançado hoje
+            <div></div>
+            <div class="col-md alert alert-secondary">Será lançado hoje
               {{
                 valorFormatado(
                   valorTotalReceitasVenceHoje(listaTransacoesReceitas)
                 )
               }}
             </div>
-            <div class="col-md-4 alert alert-danger">Valor não lançado
+            <div></div>
+            <div class="col-md alert alert-danger">Valor não lançado
               {{
                 valorFormatado(
                   valorTotalReceitasNaoLancadas(listaTransacoesReceitas)

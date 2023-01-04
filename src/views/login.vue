@@ -180,6 +180,7 @@ export default {
       this.goToGoogleAuthLink()
     },
     loginUsuario() {
+      this.$isLoading(true)
       this.loginUser({
         "email": this.login.usuario,
         "password": this.login.senha
@@ -187,11 +188,14 @@ export default {
       .then(() => {
         if (this.sucesso) {
           this.$router.push("/dashboard/profile")  
+          this.$isLoading(false)
         } else {
+          this.$isLoading(false)
           this.limpaCamposLogin()
         }
       })
       .catch((e) => {
+        this.$isLoading(false)
         console.error("err: ", e)
       })
     },
