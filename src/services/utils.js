@@ -34,7 +34,6 @@ export function contaVencida(date) {
   let dia_hoje = `${hoje_ano}-${hoje_mes}-${hoje_dia}`;
   let dia_vencimento = `${vencto_ano}-${vencto_mes}-${vencto_dia}`;
 
-  console.log(dia_hoje, dia_vencimento)
   if (new Date(dia_hoje) < new Date(dia_vencimento)) {
     return "alert alert-danger";
   } else if (dia_hoje == dia_vencimento) {
