@@ -19,14 +19,13 @@ export function formatDate(date) {
 }
 
 export function contaVencida(date) {
-  let hoje = new Date();
+  let hoje = new Date().toLocaleString("pt-BR");
   let vencimento = new Date(date);
-  hoje = hoje.toISOString();
   vencimento = vencimento.toISOString();
 
-  let hoje_ano = hoje.slice(0, 4);
-  let hoje_mes = hoje.slice(5, 7);
-  let hoje_dia = hoje.slice(8, 10);
+  let hoje_ano = hoje.slice(6, 10);
+  let hoje_mes = hoje.slice(3, 5);
+  let hoje_dia = hoje.slice(0, 2);
 
   let vencto_ano = vencimento.slice(0, 4);
   let vencto_mes = vencimento.slice(5, 7);
@@ -35,6 +34,7 @@ export function contaVencida(date) {
   let dia_hoje = `${hoje_ano}-${hoje_mes}-${hoje_dia}`;
   let dia_vencimento = `${vencto_ano}-${vencto_mes}-${vencto_dia}`;
 
+  console.log(dia_hoje, dia_vencimento)
   if (new Date(dia_hoje) < new Date(dia_vencimento)) {
     return "alert alert-danger";
   } else if (dia_hoje == dia_vencimento) {
@@ -45,14 +45,14 @@ export function contaVencida(date) {
 }
 
 export function statusConta(date) {
-  let hoje = new Date();
+  let hoje = new Date().toLocaleString("pt-BR");
   let vencimento = new Date(date);
-  hoje = hoje.toISOString();
+  //hoje = hoje.toISOString();
   vencimento = vencimento.toISOString();
 
-  let hoje_ano = hoje.slice(0, 4);
-  let hoje_mes = hoje.slice(5, 7);
-  let hoje_dia = hoje.slice(8, 10);
+  let hoje_ano = hoje.slice(6, 10);
+  let hoje_mes = hoje.slice(3, 5);
+  let hoje_dia = hoje.slice(0, 2);
 
   let vencto_ano = vencimento.slice(0, 4);
   let vencto_mes = vencimento.slice(5, 7);
