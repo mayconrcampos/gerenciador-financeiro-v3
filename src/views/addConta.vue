@@ -117,6 +117,12 @@
 <script>
 import { Field, Form, ErrorMessage } from "vee-validate";
 import { mapActions, mapGetters, mapMutations } from "vuex";
+import { formatDateToFieldDate } from "@/services/utils";
+import {
+  validaValor,
+  validaDescricao,
+  validaCategoria,
+} from "@/services/fields_validators";
 export default {
   name: "addConta",
   components: {
@@ -171,6 +177,10 @@ export default {
       "editaTransacao",
     ]),
     ...mapMutations(["setEmEdicao", "resetTransacaoEmEdicao"]),
+    formatDateToFieldDate,
+    validaValor,
+    validaDescricao,
+    validaCategoria,
     addConta() {
       if (this.editando) {
         // Edita transação
@@ -186,23 +196,23 @@ export default {
           _id: this.transacaoEmEdicao._id.$oid,
         };
 
-        this.editaTransacao(payload).then(() => {
-          if (this.transacaoSucesso) {
-            if (this.tipo == "1") {
-              this.carregarTransacoesReceitas(this.showUser).then(() => {
-                this.$router.push("/dashboard/entradas")
-              })
-              
-            } else {
-              this.carregarTransacoesDespesas(this.showUser).then(() => {
-                this.$router.push("/dashboard/saidas")
-              })
+        this.editaTransacao(payload)
+          .then(() => {
+            if (this.transacaoSucesso) {
+              if (this.tipo == "1") {
+                this.carregarTransacoesReceitas(this.showUser).then(() => {
+                  this.$router.push("/dashboard/entradas");
+                });
+              } else {
+                this.carregarTransacoesDespesas(this.showUser).then(() => {
+                  this.$router.push("/dashboard/saidas");
+                });
+              }
             }
-          }
-        })
-        .finally(() => {
-          this.limparCampos()
-        })
+          })
+          .finally(() => {
+            this.limparCampos();
+          });
       } else {
         // Adiciona transação nova
         let payload = {
@@ -245,13 +255,6 @@ export default {
       this.setEmEdicao(false);
       this.resetTransacaoEmEdicao();
     },
-    formatDateToFieldDate(date) {
-      let ano = date.$date.slice(0, 4);
-      let mes = date.$date.slice(5, 7);
-      let dia = date.$date.slice(8, 10);
-      let data = `${ano}-${mes}-${dia}`;
-      return data;
-    },
     preencheCamposEdicao() {
       this.formatDateToFieldDate(this.transacaoEmEdicao.data);
       this.tipo = this.transacaoEmEdicao.tipo;
@@ -260,28 +263,6 @@ export default {
       this.data = this.formatDateToFieldDate(this.transacaoEmEdicao.data);
       this.categoria = this.transacaoEmEdicao.categoria;
       this.comentario = this.transacaoEmEdicao.comentario;
-    },
-    validaDescricao(value) {
-      if (value.length > 2) {
-        return true;
-      }
-      return "A descrição deve ter acima de 2 caracteres";
-    },
-    validaValor(value) {
-      let num = "";
-      if (!this.editando) {
-        num = value.replace(",", ".");
-      }
-      if (isNaN(num) || value == "") {
-        return "Valor não numérico.";
-      }
-      return true;
-    },
-    validaCategoria(value) {
-      if (value) {
-        return true;
-      }
-      return "Selecione uma categoria";
     },
   },
   mounted() {

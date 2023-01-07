@@ -145,6 +145,11 @@
 import { Field, Form, ErrorMessage } from "vee-validate";
 import footerPage from "@/components/footerPage.vue";
 import { mapActions, mapState } from "vuex";
+import {
+  validaUsuario,
+  validaSenha1,
+  validaSenha2,
+} from "@/services/fields_validators";
 
 export default {
   name: "loginUser",
@@ -176,34 +181,37 @@ export default {
   },
   methods: {
     ...mapActions(["createUser", "goToGoogleAuthLink", "loginUser"]),
+    validaUsuario,
+    validaSenha1,
+    validaSenha2,
     goToAuth() {
-      this.goToGoogleAuthLink()
+      this.goToGoogleAuthLink();
     },
     loginUsuario() {
-      this.$isLoading(true)
+      this.$isLoading(true);
       this.loginUser({
-        "email": this.login.usuario,
-        "password": this.login.senha
+        email: this.login.usuario,
+        password: this.login.senha,
       })
-      .then(() => {
-        if (this.sucesso) {
-          this.$router.push("/dashboard/profile")  
-          this.$isLoading(false)
-        } else {
-          this.$isLoading(false)
-          this.limpaCamposLogin()
-        }
-      })
-      .catch((e) => {
-        this.$isLoading(false)
-        console.error("err: ", e)
-      })
+        .then(() => {
+          if (this.sucesso) {
+            this.$router.push("/dashboard/profile");
+          } else {
+            this.limpaCamposLogin();
+          }
+        })
+        .catch((e) => {
+          console.error("err: ", e);
+        })
+        .finally(() => {
+          this.$isLoading(false);
+        })
     },
     limpaCamposLogin() {
       this.login = {
-        "usuario": "",
-        "senha": ""
-      }
+        usuario: "",
+        senha: "",
+      };
     },
     cadastraUsuario() {
       this.createUser(this.cadastra)
@@ -227,43 +235,12 @@ export default {
         })
         .finally(() => {
           this.cadastra = {
-            "usuario": "",
-            "senha1": "",
-            "senha2": "",
+            usuario: "",
+            senha1: "",
+            senha2: "",
           };
           this.modalCadastro = false;
-        })
-    },
-    validaUsuario(email) {
-      let usuario = email.substring(0, email.indexOf("@"));
-      let dominio = email.substring(email.indexOf("@") + 1, email.length);
-
-      if (
-        usuario.length >= 1 &&
-        dominio.length >= 3 &&
-        usuario.search("@") == -1 &&
-        dominio.search("@") == -1 &&
-        usuario.search(" ") == -1 &&
-        dominio.search(" ") == -1 &&
-        dominio.search(".") != -1 &&
-        dominio.indexOf(".") >= 1 &&
-        dominio.lastIndexOf(".") < dominio.length - 1
-      ) {
-        return true;
-      }
-      return "Email inválido";
-    },
-    validaSenha1(senha1) {
-      if (senha1.length > 4) {
-        return true;
-      }
-      return "Somente senha acima de 4 caracteres";
-    },
-    validaSenha2(senha2) {
-      if (this.cadastra.senha1 == senha2) {
-        return true;
-      }
-      return "Senhas não conferem";
+        });
     },
   },
 };

@@ -16,7 +16,7 @@
         <thead id="tablehead">
           <tr>
             <th scope="col">Descrição</th>
-            <th class="text-start" scope="col">Valor (R$)</th>
+            <th class="text-end" scope="col">Valor (R$)</th>
             <th scope="col">Data</th>
           </tr>
         </thead>
@@ -28,8 +28,10 @@
             @click="preencheEdicao(receita)"
             :class="contaVencida(receita.data.$date)"
           >
-            <th scope="row">{{ receita.descricao }}</th>
-            <td class="text-start">{{ valorFormatado(receita.valor) }}</td>
+            <th class="text-start" scope="row">
+              <i class="fas fa-check-circle me-5"></i>{{ receita.descricao }}
+            </th>
+            <td class="text-end">{{ valorFormatado(receita.valor) }}</td>
             <td>{{ formatDate(receita.data.$date) }}</td>
           </tr>
           <div
@@ -38,34 +40,54 @@
           >
             Nenhum registro cadastrado
           </div>
-          <div class="alert d-flex">
-            <div class="col-md alert alert-success">
-              Valor lançado
+        </tbody>
+      </table>
+      <div class="row w-100 m-auto">
+        <div class="col-md alert alert-success">
+          <h3 class="d-flex flex-column">
+            Valor lançado
+            <span class="badge bg-success"
+              ><i class="fas fa-cash-register"></i>
+
               {{
                 valorFormatado(
                   valorTotalReceitasLancadas(listaTransacoesReceitas)
                 )
-              }}
-            </div>
-            <div></div>
-            <div class="col-md alert alert-secondary">Será lançado hoje
+              }}</span
+            >
+          </h3>
+        </div>
+
+        <div class="col-md alert alert-secondary">
+          <h3 class="d-flex flex-column">
+            Será lançado hoje
+            <span class="badge bg-secondary"
+              ><i class="fas fa-money-bill-wave-alt"></i>
+
               {{
                 valorFormatado(
                   valorTotalReceitasVenceHoje(listaTransacoesReceitas)
                 )
-              }}
-            </div>
-            <div></div>
-            <div class="col-md alert alert-danger">Valor não lançado
+              }}</span
+            >
+          </h3>
+        </div>
+
+        <div class="col-md alert alert-danger">
+          <h3 class="d-flex flex-column">
+            Valor não lançado
+            <span class="badge bg-danger"
+              ><i class="fas fa-edit"></i>
+
               {{
                 valorFormatado(
                   valorTotalReceitasNaoLancadas(listaTransacoesReceitas)
                 )
-              }}
-            </div>
-          </div>
-        </tbody>
-      </table>
+              }}</span
+            >
+          </h3>
+        </div>
+      </div>
     </div>
   </div>
 </template>

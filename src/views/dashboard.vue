@@ -182,7 +182,7 @@ export default {
   color: white !important;
   background: #42b983;
   border-radius: 8px 8px 8px !important;
-  box-shadow: 5px 5px 15px rgb(121, 118, 118);
+  box-shadow: 5px 5px 5px rgb(121, 118, 118);
 }
 @media (max-width: 1380px) {
   #imagemlogo {
