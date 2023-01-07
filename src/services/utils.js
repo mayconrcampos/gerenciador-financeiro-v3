@@ -98,3 +98,11 @@ export function valorTotalReceitasNaoLancadas(listaDeReceitas) {
     });
     return total;
 }
+
+export function formatDateToFieldDate(date) {
+  let ano = date.$date.slice(0, 4);
+  let mes = date.$date.slice(5, 7);
+  let dia = date.$date.slice(8, 10);
+  let data = `${ano}-${mes}-${dia}`;
+  return data;
+}

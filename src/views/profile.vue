@@ -25,7 +25,7 @@
                   type="text"
                   v-model="categoria"
                   name="categoria"
-                  :rules="validaCategoria"
+                  :rules="validaCampoCategoria"
                   id="addcategoria"
                   class="form-control form-control fs-5 mb-2"
                 />
@@ -164,6 +164,7 @@
 <script>
 import { Field, Form, ErrorMessage } from "vee-validate";
 import { mapActions, mapGetters } from "vuex";
+import { validaCampoCategoria } from "@/services/fields_validators";
 export default {
   name: "proFile",
   components: {
@@ -201,6 +202,7 @@ export default {
       "carregarCategoriasDespesas",
       "deleteCategoria",
     ]),
+    validaCampoCategoria,
     addCategoria() {
       let payload = {
         categoria: this.categoria,
@@ -241,12 +243,6 @@ export default {
           }
         });
       }
-    },
-    validaCategoria(value) {
-      if (value.length > 4) {
-        return true;
-      }
-      return "Somente categorias acima de 4 caracteres.";
     },
     limpaCampos() {
       this.tipo = "1";
