@@ -59,9 +59,8 @@
     </nav>
     <hr />
     <div class="text-start me-4">
-      <small class="badge bg-white text-dark"
-        ><i class="fas fa-user"></i> {{ emailUser }}</small
-      >
+      <h5><span class="badge bg-success p-2"><i class="fas fa-user"></i> {{ emailUser }}</span></h5>
+
     </div>
     <div class="row mt-5">
       <router-view></router-view>
